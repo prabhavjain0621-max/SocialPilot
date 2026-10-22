@@ -11,3 +11,11 @@ build/
 
 # Editor
 .vscode/
+
+*.sql
+backup_*
+*.pem
+*.bak
+venv_test/
+backend/media/
+celerybeat-schedule*
