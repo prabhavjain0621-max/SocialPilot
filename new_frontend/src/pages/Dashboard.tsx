@@ -44,7 +44,7 @@ import {
 import type { CampaignOut } from '@/types/campaign';
 import type { OverviewAnalytics } from '@/types/analytics';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 interface SocialAccountData {
   id: number;
@@ -261,28 +261,28 @@ export default function Dashboard() {
       label: 'Scheduled Posts',
       value: scheduledCount,
       variant: 'brand' as const,
-      color: 'text-brand-600 bg-brand-50',
+      color: 'text-brand-600 bg-brand-50 dark:bg-brand-950/60 dark:text-brand-400',
     },
     {
       icon: CheckCircle2,
       label: 'Published Posts',
       value: publishedCount,
       variant: 'success' as const,
-      color: 'text-success-600 bg-success-50',
+      color: 'text-success-600 bg-success-50 dark:bg-success-950/60 dark:text-success-400',
     },
     {
       icon: Link2,
       label: 'Connected Channels',
       value: connectedAccountsCount,
       variant: connectedAccountsCount > 0 ? ('brand' as const) : ('neutral' as const),
-      color: 'text-indigo-600 bg-indigo-50',
+      color: 'text-indigo-600 bg-indigo-50 dark:bg-indigo-950/60 dark:text-indigo-400',
     },
     {
       icon: TrendingUp,
       label: 'Total Engagements',
       value: totalEngagements.toLocaleString(),
       variant: 'accent' as const,
-      color: 'text-amber-600 bg-amber-50',
+      color: 'text-amber-600 bg-amber-50 dark:bg-amber-950/60 dark:text-amber-400',
     },
   ];
 
@@ -397,7 +397,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left column — scheduling & campaigns & analytics */}
+        {/* Left column â€” scheduling & campaigns & analytics */}
         <div className="space-y-6 lg:col-span-2">
           {/* Scheduling / Recent Posts Overview */}
           <Card className="overflow-hidden">
@@ -499,7 +499,7 @@ export default function Dashboard() {
                                   return (
                                     <div
                                       key={pp.id}
-                                      className="inline-flex items-center gap-1.5 rounded-lg border border-ink-200 bg-white px-2 py-0.5 text-xs shadow-xs"
+                                      className="inline-flex items-center gap-1.5 rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-850 px-2 py-0.5 text-xs shadow-xs"
                                     >
                                       <div
                                         className={`flex h-4 w-4 items-center justify-center rounded ${
@@ -625,11 +625,11 @@ export default function Dashboard() {
                 {recentCampaigns.map((c) => (
                   <div
                     key={c.id}
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-ink-100 bg-white p-4 shadow-xs transition-colors hover:border-ink-200"
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-850 p-4 shadow-xs transition-colors hover:border-ink-200 dark:hover:border-ink-700"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-bold text-ink-900">{c.name}</h4>
+                        <h4 className="text-sm font-bold text-ink-900 dark:text-white">{c.name}</h4>
                         <Badge
                           variant={
                             c.status === 'active'
@@ -785,7 +785,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        {/* Right column — quick actions & connected accounts */}
+        {/* Right column â€” quick actions & connected accounts */}
         <div className="space-y-6">
           {/* Quick actions */}
           <Card className="p-6">
@@ -843,7 +843,7 @@ export default function Dashboard() {
                   return (
                     <div
                       key={acc.id}
-                      className="flex items-center justify-between rounded-xl border border-ink-100 bg-white p-3 shadow-xs transition-colors hover:border-ink-200"
+                      className="flex items-center justify-between rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-850 p-3 shadow-xs transition-colors hover:border-ink-200 dark:hover:border-ink-700"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div
@@ -854,7 +854,7 @@ export default function Dashboard() {
                           <PlatformIcon platform={pKey} className="h-4 w-4" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-semibold text-ink-900 capitalize truncate">
+                          <p className="text-xs font-semibold text-ink-900 dark:text-white capitalize truncate">
                             {acc.platform}
                           </p>
                           <p className="text-[11px] text-ink-500 truncate" title={acc.account_name}>
@@ -889,25 +889,25 @@ export default function Dashboard() {
       {/* Publishing History Logs Modal */}
       {activeLogPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/60 p-4 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl rounded-2xl border border-ink-100 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+          <div className="relative w-full max-w-2xl rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-ink-100 p-5 bg-ink-50/50">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 p-5 bg-ink-50/50 dark:bg-ink-800/40">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400">
                   <History className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold text-ink-900">Publishing History & Logs</h3>
-                  <p className="text-xs text-ink-400">
+                  <h3 className="text-base font-semibold text-ink-900 dark:text-white">Publishing History & Logs</h3>
+                  <p className="text-xs text-ink-400 dark:text-ink-500">
                     Post #{activeLogPost.id} &bull; Status:{' '}
-                    <span className="font-semibold capitalize">{activeLogPost.status}</span>
+                    <span className="font-semibold capitalize text-ink-700 dark:text-ink-300">{activeLogPost.status}</span>
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveLogPost(null)}
-                className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 hover:text-ink-600 transition-colors"
+                className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-600 dark:hover:text-ink-200 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -916,9 +916,9 @@ export default function Dashboard() {
             {/* Modal Body */}
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {/* Post Content Snippet */}
-              <div className="rounded-xl border border-ink-100 bg-ink-50/40 p-3.5 text-xs text-ink-700 space-y-1">
+              <div className="rounded-xl border border-ink-100 dark:border-ink-800 bg-ink-50/40 dark:bg-ink-950/40 p-3.5 text-xs text-ink-700 dark:text-ink-300 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-ink-900">Post Content</span>
+                  <span className="font-semibold text-ink-900 dark:text-white">Post Content</span>
                   {activeLogPost.is_recurring && (
                     <Badge variant="accent" size="sm">
                       <Repeat className="h-3 w-3 mr-1" />
@@ -967,21 +967,21 @@ export default function Dashboard() {
                       return (
                         <div
                           key={log.id}
-                          className="flex flex-col sm:flex-row sm:items-start gap-3 rounded-xl border border-ink-100 bg-white p-3.5 shadow-xs transition-colors hover:border-ink-200"
+                          className="flex flex-col sm:flex-row sm:items-start gap-3 rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-950 p-3.5 shadow-xs transition-colors hover:border-ink-200 dark:hover:border-ink-700"
                         >
                           <div className="flex items-center gap-2.5 shrink-0">
                             <div
                               className={`flex h-8 w-8 items-center justify-center rounded-lg ${
-                                p?.bg || 'bg-ink-50'
-                              } ${p?.color || 'text-ink-600'}`}
+                                p?.bg || 'bg-ink-50 dark:bg-ink-800'
+                              } ${p?.color || 'text-ink-600 dark:text-ink-300'}`}
                             >
                               <PlatformIcon platform={pKey} className="h-4 w-4" />
                             </div>
                             <div>
-                              <p className="text-xs font-semibold capitalize text-ink-900">
+                              <p className="text-xs font-semibold capitalize text-ink-900 dark:text-white">
                                 {log.platform}
                               </p>
-                              <p className="text-[11px] text-ink-400">
+                              <p className="text-[11px] text-ink-400 dark:text-ink-500">
                                 {formatDateTime(log.created_at)}
                               </p>
                             </div>
@@ -1001,7 +1001,7 @@ export default function Dashboard() {
                             {log.message ? (
                               <p
                                 className={`text-xs ${
-                                  isFailure ? 'text-danger-700 font-mono bg-danger-50/50 p-2 rounded-lg' : 'text-ink-700'
+                                  isFailure ? 'text-danger-700 dark:text-danger-400 font-mono bg-danger-50/50 dark:bg-danger-950/40 p-2 rounded-lg' : 'text-ink-700 dark:text-ink-300'
                                 } whitespace-pre-wrap break-words`}
                               >
                                 {log.message}
@@ -1019,7 +1019,7 @@ export default function Dashboard() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex justify-end border-t border-ink-100 p-4 bg-ink-50/30">
+            <div className="flex justify-end border-t border-ink-100 dark:border-ink-800 p-4 bg-ink-50/30 dark:bg-ink-800/30">
               <Button variant="outline" size="sm" onClick={() => setActiveLogPost(null)}>
                 Close
               </Button>

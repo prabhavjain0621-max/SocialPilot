@@ -22,7 +22,7 @@ export default function Logo({
         className={showText ? "h-11 w-11 object-contain" : "h-9 w-9 object-contain"}
       />
       {showText && (
-        <span className={`text-xl font-bold tracking-tight ${dark ? 'text-white' : 'text-ink-900'}`}>
+        <span className={`text-xl font-bold tracking-tight ${dark ? 'text-white' : 'text-ink-900 dark:text-white'}`}>
           SocialPilot
         </span>
       )}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Landing from '@/pages/Landing';
 import SignIn from '@/pages/SignIn';
@@ -24,7 +25,8 @@ import AdminSettings from '@/pages/admin/AdminSettings';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Landing />} />
@@ -68,6 +70,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </ThemeProvider>
+  </AuthProvider>
   );
 }

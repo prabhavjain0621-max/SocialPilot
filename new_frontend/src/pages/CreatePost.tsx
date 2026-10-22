@@ -59,7 +59,7 @@ const AI_TONE_OPTIONS: { value: AITone; label: string }[] = [
   { value: 'inspirational', label: 'Inspirational' },
 ];
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 function formatBytes(bytes?: number): string {
   if (!bytes || bytes === 0) return '0 B';
@@ -756,19 +756,19 @@ export default function CreatePost() {
                 onClick={() => setAction('draft')}
                 className={`flex flex-col items-start rounded-xl border p-3 text-left transition-all ${
                   action === 'draft'
-                    ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20 shadow-xs'
-                    : 'border-ink-200 hover:border-ink-300 hover:bg-ink-50/50'
+                    ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/40 dark:border-brand-500 ring-2 ring-brand-500/20 shadow-xs'
+                    : 'border-ink-200 dark:border-ink-800 hover:border-ink-300 dark:hover:border-ink-700 hover:bg-ink-50/50 dark:hover:bg-ink-800/40'
                 } ${!isStatusEditable ? 'cursor-not-allowed opacity-60' : ''}`}
               >
                 <div className="flex items-center gap-2">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-lg ${
-                      action === 'draft' ? 'bg-brand-600 text-white' : 'bg-ink-100 text-ink-600'
+                      action === 'draft' ? 'bg-brand-600 text-white' : 'bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300'
                     }`}
                   >
                     <FileText className="h-4 w-4" />
                   </div>
-                  <span className="text-sm font-semibold text-ink-900">Save as Draft</span>
+                  <span className="text-sm font-semibold text-ink-900 dark:text-white">Save as Draft</span>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-400">
                   Save content without scheduling. Accounts optional.
@@ -782,19 +782,19 @@ export default function CreatePost() {
                 onClick={() => setAction('schedule')}
                 className={`flex flex-col items-start rounded-xl border p-3 text-left transition-all ${
                   action === 'schedule'
-                    ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20 shadow-xs'
-                    : 'border-ink-200 hover:border-ink-300 hover:bg-ink-50/50'
+                    ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/40 dark:border-brand-500 ring-2 ring-brand-500/20 shadow-xs'
+                    : 'border-ink-200 dark:border-ink-800 hover:border-ink-300 dark:hover:border-ink-700 hover:bg-ink-50/50 dark:hover:bg-ink-800/40'
                 } ${!isStatusEditable ? 'cursor-not-allowed opacity-60' : ''}`}
               >
                 <div className="flex items-center gap-2">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-lg ${
-                      action === 'schedule' ? 'bg-brand-600 text-white' : 'bg-ink-100 text-ink-600'
+                      action === 'schedule' ? 'bg-brand-600 text-white' : 'bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300'
                     }`}
                   >
                     <Calendar className="h-4 w-4" />
                   </div>
-                  <span className="text-sm font-semibold text-ink-900">Schedule for Later</span>
+                  <span className="text-sm font-semibold text-ink-900 dark:text-white">Schedule for Later</span>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-400">
                   Auto-publish at a specific date/time. Recurrence available.
@@ -808,19 +808,19 @@ export default function CreatePost() {
                 onClick={() => setAction('publish_now')}
                 className={`flex flex-col items-start rounded-xl border p-3 text-left transition-all ${
                   action === 'publish_now'
-                    ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20 shadow-xs'
-                    : 'border-ink-200 hover:border-ink-300 hover:bg-ink-50/50'
+                    ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/40 dark:border-brand-500 ring-2 ring-brand-500/20 shadow-xs'
+                    : 'border-ink-200 dark:border-ink-800 hover:border-ink-300 dark:hover:border-ink-700 hover:bg-ink-50/50 dark:hover:bg-ink-800/40'
                 } ${!isStatusEditable ? 'cursor-not-allowed opacity-60' : ''}`}
               >
                 <div className="flex items-center gap-2">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-lg ${
-                      action === 'publish_now' ? 'bg-brand-600 text-white' : 'bg-ink-100 text-ink-600'
+                      action === 'publish_now' ? 'bg-brand-600 text-white' : 'bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300'
                     }`}
                   >
                     <Send className="h-4 w-4" />
                   </div>
-                  <span className="text-sm font-semibold text-ink-900">Publish Now</span>
+                  <span className="text-sm font-semibold text-ink-900 dark:text-white">Publish Now</span>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-400">
                   Publish to connected accounts immediately.
@@ -885,8 +885,8 @@ export default function CreatePost() {
                       onClick={() => toggleAccount(acc.id)}
                       className={`flex items-center gap-3 rounded-xl border p-3.5 text-left transition-all ${
                         isSelected
-                          ? 'border-brand-300 bg-brand-50/40 ring-2 ring-brand-500/10'
-                          : 'border-ink-100 hover:border-ink-200 hover:bg-ink-50/50'
+                          ? 'border-brand-300 dark:border-brand-600 bg-brand-50/40 dark:bg-brand-950/30 ring-2 ring-brand-500/10'
+                          : 'border-ink-100 dark:border-ink-800 hover:border-ink-200 dark:hover:border-ink-700 hover:bg-ink-50/50 dark:hover:bg-ink-800/40'
                       } ${!isStatusEditable ? 'cursor-not-allowed opacity-60' : ''}`}
                     >
                       <div
@@ -898,7 +898,7 @@ export default function CreatePost() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <p className="text-sm font-semibold text-ink-900 truncate">
+                          <p className="text-sm font-semibold text-ink-900 dark:text-white truncate">
                             {acc.account_name || acc.platform}
                           </p>
                         </div>
@@ -908,7 +908,7 @@ export default function CreatePost() {
                         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${
                           isSelected
                             ? 'border-brand-600 bg-brand-600 text-white'
-                            : 'border-ink-300 bg-white'
+                            : 'border-ink-300 dark:border-ink-700 bg-white dark:bg-ink-800'
                         }`}
                       >
                         {isSelected && <CheckCircle2 className="h-3.5 w-3.5" />}
@@ -922,7 +922,7 @@ export default function CreatePost() {
 
           {/* YouTube specific title field (conditional: only when YouTube account selected) */}
           {hasYouTube && (
-            <Card className="border-red-100 bg-red-50/20 p-6">
+            <Card className="border-red-100 dark:border-red-900/40 bg-red-50/20 dark:bg-red-950/20 p-6">
               <div className="flex items-center gap-2.5">
                 <Video className="h-5 w-5 text-red-600" />
                 <div>
@@ -1043,7 +1043,7 @@ export default function CreatePost() {
                           {uploadedVideoMeta?.filename || videoUrl.split('/').pop()?.split('?')[0] || (attachedMediaIsImage ? 'Uploaded image' : 'Uploaded video')}
                         </p>
                         <p className="text-xs text-ink-400">
-                          {uploadedVideoMeta?.size_bytes ? formatBytes(uploadedVideoMeta.size_bytes) + ' • ' : ''}
+                          {uploadedVideoMeta?.size_bytes ? formatBytes(uploadedVideoMeta.size_bytes) + ' â€¢ ' : ''}
                           <span className="capitalize">{currentMediaType}</span> attached & ready to publish
                         </p>
                       </div>
@@ -1084,16 +1084,16 @@ export default function CreatePost() {
 
                   {/* Attached Media Preview Frame */}
                   {attachedMediaIsImage ? (
-                    <div className="relative overflow-hidden rounded-xl border border-ink-200 bg-white">
+                    <div className="relative overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900">
                       <img
                         src={resolveMediaUrl(videoUrl)}
                         alt="Uploaded media preview"
-                        className="max-h-64 w-full object-contain bg-ink-950/5"
+                        className="max-h-64 w-full object-contain bg-ink-950/5 dark:bg-ink-950/40"
                         onError={(e) => handleMediaError(e, videoUrl)}
                       />
                     </div>
                   ) : (
-                    <div className="relative overflow-hidden rounded-xl border border-ink-200 bg-black">
+                    <div className="relative overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-black">
                       <video
                         src={resolveMediaUrl(videoUrl)}
                         controls
@@ -1105,8 +1105,8 @@ export default function CreatePost() {
                   )}
 
                   {hasYouTube && attachedMediaIsImage && (
-                    <div className="flex items-start gap-2 rounded-lg border border-warning-200 bg-warning-50 px-3 py-2 text-xs text-warning-800">
-                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-warning-600" />
+                    <div className="flex items-start gap-2 rounded-lg border border-warning-200 dark:border-warning-900/50 bg-warning-50 dark:bg-warning-950/30 px-3 py-2 text-xs text-warning-800 dark:text-warning-300">
+                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-warning-600 dark:text-warning-400" />
                       <span>
                         YouTube posts require a video &mdash; this image will only be used for other selected platforms (LinkedIn, Instagram, Facebook).
                       </span>
@@ -1114,7 +1114,7 @@ export default function CreatePost() {
                   )}
 
                   {hasYouTube && (
-                    <div className="border-t border-ink-200 pt-3">
+                    <div className="border-t border-ink-200 dark:border-ink-800 pt-3">
                       <label className="flex cursor-pointer items-start gap-3">
                         <input
                           type="checkbox"
@@ -1127,7 +1127,7 @@ export default function CreatePost() {
                           className="mt-0.5 h-4 w-4 rounded border-ink-300 text-brand-600 focus:ring-brand-500"
                         />
                         <span>
-                          <span className="block text-sm font-semibold text-ink-900">Post as YouTube Short</span>
+                          <span className="block text-sm font-semibold text-ink-900 dark:text-white">Post as YouTube Short</span>
                           <span className="mt-0.5 block text-xs text-ink-400">
                             {attachedMediaIsVideo
                               ? 'Video must be 3 minutes or shorter and vertical/square (not horizontal).'
@@ -1136,8 +1136,8 @@ export default function CreatePost() {
                         </span>
                       </label>
                       {shortsError && (
-                        <div className="mt-3 flex items-start gap-2 rounded-lg border border-danger-200 bg-danger-50 px-3 py-2 text-xs text-danger-700">
-                          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-danger-600" />
+                        <div className="mt-3 flex items-start gap-2 rounded-lg border border-danger-200 dark:border-danger-900/50 bg-danger-50 dark:bg-danger-950/30 px-3 py-2 text-xs text-danger-700 dark:text-danger-300">
+                          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-danger-600 dark:text-danger-400" />
                           <span>{shortsError}</span>
                         </div>
                       )}
@@ -1153,15 +1153,15 @@ export default function CreatePost() {
                     onClick={() => isStatusEditable && fileInputRef.current?.click()}
                     className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-8 text-center transition-all ${
                       isDragging
-                        ? 'border-brand-500 bg-brand-50/60 ring-2 ring-brand-500/20'
-                        : 'border-ink-200 bg-ink-50/30 hover:border-brand-300 hover:bg-brand-50/20'
+                        ? 'border-brand-500 bg-brand-50/60 dark:bg-brand-950/30 ring-2 ring-brand-500/20'
+                        : 'border-ink-200 dark:border-ink-800 bg-ink-50/30 dark:bg-ink-900/40 hover:border-brand-300 dark:hover:border-brand-600 hover:bg-brand-50/20 dark:hover:bg-brand-950/20'
                     } ${!isStatusEditable ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-ink-500 shadow-sm">
-                      <Upload className="h-6 w-6 text-brand-600" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white dark:bg-ink-800 text-ink-500 dark:text-ink-400 shadow-sm border border-transparent dark:border-ink-700">
+                      <Upload className="h-6 w-6 text-brand-600 dark:text-brand-400" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-ink-800">
+                      <p className="text-sm font-semibold text-ink-800 dark:text-ink-200">
                         Click to browse or drag and drop a photo or video
                       </p>
                       <p className="mt-1 text-xs text-ink-400">
@@ -1301,9 +1301,9 @@ export default function CreatePost() {
 
               {/* Generated Drafts Platform Tabs / Chips */}
               {generatedPosts && Object.keys(generatedPosts).length > 0 && (
-                <div className="rounded-xl border border-brand-100 bg-white p-4 space-y-3">
+                <div className="rounded-xl border border-brand-100 dark:border-brand-900/40 bg-white dark:bg-ink-900 p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-ink-700">
+                    <span className="text-xs font-semibold text-ink-700 dark:text-ink-200">
                       Generated Drafts ({Object.keys(generatedPosts).length} platform{Object.keys(generatedPosts).length > 1 ? 's' : ''}):
                     </span>
                     <span className="text-[11px] text-ink-400">Click a platform tab to apply</span>
@@ -1321,19 +1321,19 @@ export default function CreatePost() {
                           onClick={() => handleSelectGeneratedPlatform(platformKey)}
                           className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all ${
                             isActive
-                              ? 'border-brand-500 bg-brand-50 text-brand-700 shadow-xs ring-1 ring-brand-500 font-semibold'
-                              : 'border-ink-200 bg-white text-ink-700 hover:border-ink-300 hover:bg-ink-50'
+                              ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 shadow-xs ring-1 ring-brand-500 font-semibold'
+                              : 'border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-800 text-ink-700 dark:text-ink-200 hover:border-ink-300 dark:hover:border-ink-700 hover:bg-ink-50 dark:hover:bg-ink-700/50'
                           }`}
                         >
                           <PlatformIcon platform={platformKey as any} className="h-3.5 w-3.5" />
                           <span>{platformConfig?.name || platformKey}</span>
-                          {isActive && <Check className="h-3 w-3 text-brand-600 ml-0.5" />}
+                          {isActive && <Check className="h-3 w-3 text-brand-600 dark:text-brand-400 ml-0.5" />}
                         </button>
                       );
                     })}
                   </div>
 
-                  <p className="text-[11px] text-ink-400 flex items-center gap-1.5 pt-1.5 border-t border-ink-100">
+                  <p className="text-[11px] text-ink-400 flex items-center gap-1.5 pt-1.5 border-t border-ink-100 dark:border-ink-800">
                     <Sparkles className="h-3 w-3 text-brand-500 shrink-0" />
                     <span>AI-generated draft. Review before posting.</span>
                   </p>
@@ -1482,9 +1482,9 @@ export default function CreatePost() {
                 </div>
 
                 {isRecurring && (
-                  <div className="mt-4 rounded-xl border border-brand-100 bg-brand-50/30 p-4 space-y-4">
+                  <div className="mt-4 rounded-xl border border-brand-100 dark:border-brand-900/40 bg-brand-50/30 dark:bg-brand-950/20 p-4 space-y-4">
                     <div>
-                      <label className="text-xs font-semibold text-ink-700">Recurrence Frequency</label>
+                      <label className="text-xs font-semibold text-ink-700 dark:text-ink-200">Recurrence Frequency</label>
                       <div className="mt-2 grid grid-cols-3 gap-2">
                         {(['daily', 'weekly', 'monthly'] as RecurrencePattern[]).map((pattern) => (
                           <button
@@ -1494,8 +1494,8 @@ export default function CreatePost() {
                             onClick={() => setRecurrencePattern(pattern)}
                             className={`rounded-lg border px-3 py-2 text-xs font-medium capitalize transition-all ${
                               recurrencePattern === pattern
-                                ? 'border-brand-600 bg-white text-brand-700 shadow-xs ring-1 ring-brand-600'
-                                : 'border-ink-200 bg-white text-ink-600 hover:bg-ink-50'
+                                ? 'border-brand-600 bg-white dark:bg-ink-800 text-brand-700 dark:text-brand-400 shadow-xs ring-1 ring-brand-600'
+                                : 'border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 text-ink-600 dark:text-ink-300 hover:bg-ink-50 dark:hover:bg-ink-800'
                             }`}
                           >
                             {pattern}
@@ -1505,7 +1505,7 @@ export default function CreatePost() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-ink-700">
+                      <label className="text-xs font-semibold text-ink-700 dark:text-ink-200">
                         Repeat End Date <span className="font-normal text-ink-400">(Optional)</span>
                       </label>
                       <div className="relative mt-1.5">
@@ -1515,7 +1515,7 @@ export default function CreatePost() {
                           disabled={!isStatusEditable}
                           value={recurrenceEndDate}
                           onChange={(e) => setRecurrenceEndDate(e.target.value)}
-                          className="w-full rounded-xl border border-ink-100 bg-white py-2 pl-10 pr-3 text-xs text-ink-700 transition-all focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10 disabled:bg-ink-50 disabled:text-ink-400"
+                          className="w-full rounded-xl border border-ink-100 dark:border-ink-700 bg-white dark:bg-ink-900 py-2 pl-10 pr-3 text-xs text-ink-700 dark:text-ink-200 transition-all focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10 disabled:bg-ink-50 dark:disabled:bg-ink-800 disabled:text-ink-400"
                         />
                       </div>
                       <p className="mt-1 text-[11px] text-ink-400">
@@ -1645,7 +1645,7 @@ export default function CreatePost() {
 
                   {videoUrl ? (
                     attachedMediaIsImage ? (
-                      <div className="overflow-hidden rounded-xl border border-ink-200 bg-white">
+                      <div className="overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900">
                         <img
                           src={resolveMediaUrl(videoUrl)}
                           alt="Post media preview"
@@ -1658,7 +1658,7 @@ export default function CreatePost() {
                         </div>
                       </div>
                     ) : (
-                      <div className="overflow-hidden rounded-xl border border-ink-200 bg-black">
+                      <div className="overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-black">
                         <video
                           src={resolveMediaUrl(videoUrl)}
                           controls
@@ -1673,7 +1673,7 @@ export default function CreatePost() {
                       </div>
                     )
                   ) : (
-                    <div className="mt-2 h-14 rounded-xl border border-dashed border-ink-100 bg-ink-50/30 flex items-center justify-center">
+                    <div className="mt-2 h-14 rounded-xl border border-dashed border-ink-100 dark:border-ink-800 bg-ink-50/30 dark:bg-ink-900/30 flex items-center justify-center">
                       <span className="text-xs text-ink-400">No media attached</span>
                     </div>
                   )}
@@ -1692,7 +1692,7 @@ export default function CreatePost() {
 
                   return (
                     <Card key={acc.id} className="overflow-hidden shadow-sm">
-                      <div className="flex items-center justify-between border-b border-ink-100 p-3">
+                      <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 p-3">
                         <div className="flex items-center gap-2.5">
                           <div
                             className={`flex h-8 w-8 items-center justify-center rounded-lg ${
@@ -1702,7 +1702,7 @@ export default function CreatePost() {
                             <PlatformIcon platform={platformKey} className="h-4 w-4" />
                           </div>
                           <div>
-                            <span className="text-sm font-semibold text-ink-900">{acc.account_name}</span>
+                            <span className="text-sm font-semibold text-ink-900 dark:text-white">{acc.account_name}</span>
                             <span className="ml-1.5 text-xs text-ink-400 capitalize">({acc.platform})</span>
                           </div>
                         </div>
@@ -1722,24 +1722,24 @@ export default function CreatePost() {
                       </div>
                       <div className="p-4 space-y-3">
                         {isYouTubeAcc && (
-                          <div className="rounded-lg bg-ink-50 p-2.5 text-xs">
-                            <p className="font-semibold text-ink-800">
-                              YouTube Title: <span className="font-normal text-ink-600">{title || '(Untitled Video)'}</span>
+                          <div className="rounded-lg bg-ink-50 dark:bg-ink-800/80 p-2.5 text-xs">
+                            <p className="font-semibold text-ink-800 dark:text-ink-200">
+                              YouTube Title: <span className="font-normal text-ink-600 dark:text-ink-300">{title || '(Untitled Video)'}</span>
                             </p>
                           </div>
                         )}
 
                         {content ? (
-                          <p className="text-sm leading-relaxed text-ink-700 whitespace-pre-wrap">
+                          <p className="text-sm leading-relaxed text-ink-700 dark:text-ink-200 whitespace-pre-wrap">
                             {content}
                           </p>
                         ) : (
-                          <p className="text-sm text-ink-300 italic">Your content preview will appear here...</p>
+                          <p className="text-sm text-ink-300 dark:text-ink-500 italic">Your content preview will appear here...</p>
                         )}
 
                         {videoUrl ? (
                           attachedMediaIsImage ? (
-                            <div className="overflow-hidden rounded-xl border border-ink-200 bg-white">
+                            <div className="overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900">
                               <img
                                 src={resolveMediaUrl(videoUrl)}
                                 alt="Post media preview"
@@ -1752,7 +1752,7 @@ export default function CreatePost() {
                               </div>
                             </div>
                           ) : (
-                            <div className="overflow-hidden rounded-xl border border-ink-200 bg-black">
+                            <div className="overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-black">
                               <video
                                 src={resolveMediaUrl(videoUrl)}
                                 controls
@@ -1784,11 +1784,11 @@ export default function CreatePost() {
       {/* Choose from Media Library Picker Modal */}
       {showMediaPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="relative flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+          <div className="relative flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white dark:bg-ink-900 border border-transparent dark:border-ink-800 shadow-2xl">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-ink-100 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 px-6 py-4">
               <div>
-                <h3 className="text-base font-semibold text-ink-900">Select Media from Library</h3>
+                <h3 className="text-base font-semibold text-ink-900 dark:text-white">Select Media from Library</h3>
                 <p className="text-xs text-ink-400">
                   Choose any uploaded image or video to attach to your post.
                 </p>
@@ -1796,14 +1796,14 @@ export default function CreatePost() {
               <button
                 type="button"
                 onClick={() => setShowMediaPicker(false)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-700 dark:hover:text-ink-200 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Filter & Search Toolbar */}
-            <div className="flex flex-col gap-3 border-b border-ink-100 bg-ink-50/50 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-3 border-b border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-950/40 p-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-1.5">
                 {(
                   [
@@ -1819,7 +1819,7 @@ export default function CreatePost() {
                     className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                       libraryFilter === t.key
                         ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                        : 'bg-white text-ink-600 border border-ink-200 hover:bg-ink-100'
+                        : 'bg-white dark:bg-ink-800 text-ink-600 dark:text-ink-300 border border-ink-200 dark:border-ink-700 hover:bg-ink-100 dark:hover:bg-ink-700'
                     }`}
                   >
                     {t.label}
@@ -1834,7 +1834,7 @@ export default function CreatePost() {
                   value={librarySearch}
                   onChange={(e) => setLibrarySearch(e.target.value)}
                   placeholder="Search files..."
-                  className="w-full rounded-lg border border-ink-200 bg-white py-1.5 pl-8 pr-3 text-xs text-ink-800 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-800 py-1.5 pl-8 pr-3 text-xs text-ink-800 dark:text-ink-100 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none"
                 />
               </div>
             </div>
@@ -1848,10 +1848,10 @@ export default function CreatePost() {
                 </div>
               ) : libraryMedia.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-100 text-ink-400 mb-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-100 dark:bg-ink-800 text-ink-400 mb-3">
                     <ImageIcon className="h-6 w-6" />
                   </div>
-                  <p className="text-sm font-semibold text-ink-800">No media files found</p>
+                  <p className="text-sm font-semibold text-ink-800 dark:text-ink-200">No media files found</p>
                   <p className="mt-1 text-xs text-ink-400 max-w-sm">
                     {librarySearch ? `No results match "${librarySearch}".` : 'Your media library is currently empty. Upload files from your computer.'}
                   </p>
@@ -1862,7 +1862,7 @@ export default function CreatePost() {
                     <div
                       key={item.id}
                       onClick={() => handleSelectFromLibrary(item)}
-                      className="group relative cursor-pointer overflow-hidden rounded-xl border border-ink-200 bg-white p-2 transition-all hover:border-brand-500 hover:ring-2 hover:ring-brand-500/20 hover:shadow-md"
+                      className="group relative cursor-pointer overflow-hidden rounded-xl border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-850 p-2 transition-all hover:border-brand-500 dark:hover:border-brand-400 hover:ring-2 hover:ring-brand-500/20 hover:shadow-md"
                     >
                       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-ink-950 flex items-center justify-center">
                         {item.media_type === 'image' ? (
@@ -1882,7 +1882,7 @@ export default function CreatePost() {
                         </span>
                       </div>
                       <div className="mt-2 min-w-0">
-                        <p className="truncate text-xs font-semibold text-ink-900 group-hover:text-brand-600">
+                        <p className="truncate text-xs font-semibold text-ink-900 dark:text-ink-100 group-hover:text-brand-600 dark:group-hover:text-brand-400">
                           {item.original_filename}
                         </p>
                         <p className="text-[10px] text-ink-400">
@@ -1896,7 +1896,7 @@ export default function CreatePost() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between border-t border-ink-100 bg-ink-50 px-6 py-3">
+            <div className="flex items-center justify-between border-t border-ink-100 dark:border-ink-800 bg-ink-50 dark:bg-ink-950 px-6 py-3">
               <span className="text-xs text-ink-400">
                 {libraryMedia.length} file{libraryMedia.length !== 1 ? 's' : ''} available
               </span>

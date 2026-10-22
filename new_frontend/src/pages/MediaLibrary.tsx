@@ -266,19 +266,19 @@ export default function MediaLibrary() {
           onClick={() => !uploading && fileInputRef.current?.click()}
           className={`lg:col-span-2 flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed py-8 px-6 transition-all ${
             isDragging
-              ? 'border-brand-500 bg-brand-50/70 ring-4 ring-brand-500/10'
-              : 'border-ink-200 bg-white/70 hover:border-brand-400 hover:bg-brand-50/20'
+              ? 'border-brand-500 bg-brand-50/70 ring-4 ring-brand-500/10 dark:bg-brand-950/40'
+              : 'border-ink-200 dark:border-ink-800 bg-white/70 dark:bg-ink-900/60 hover:border-brand-400 hover:bg-brand-50/20 dark:hover:bg-brand-950/20'
           } ${uploading ? 'pointer-events-none opacity-60' : ''}`}
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 shadow-soft">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 shadow-soft">
             {uploading ? (
-              <Loader2 className="h-6 w-6 animate-spin text-brand-600" />
+              <Loader2 className="h-6 w-6 animate-spin text-brand-600 dark:text-brand-400" />
             ) : (
-              <Upload className="h-6 w-6 text-brand-600" />
+              <Upload className="h-6 w-6 text-brand-600 dark:text-brand-400" />
             )}
           </div>
           <div className="text-center">
-            <p className="text-sm font-semibold text-ink-900">
+            <p className="text-sm font-semibold text-ink-900 dark:text-white">
               {uploading ? 'Uploading media to server...' : 'Drag & drop media files here, or browse from computer'}
             </p>
             <p className="mt-1 text-xs text-ink-400">
@@ -292,32 +292,32 @@ export default function MediaLibrary() {
           <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-100 text-ink-700">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-200">
                   <HardDrive className="h-4 w-4" />
                 </div>
-                <h4 className="text-sm font-semibold text-ink-900">Storage Overview</h4>
+                <h4 className="text-sm font-semibold text-ink-900 dark:text-white">Storage Overview</h4>
               </div>
               <Badge variant="brand">{formatBytes(totalSize)}</Badge>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-ink-50 p-3">
-                <div className="flex items-center gap-1.5 text-xs text-ink-500 font-medium">
-                  <ImageIcon className="h-3.5 w-3.5 text-brand-600" />
+              <div className="rounded-xl bg-ink-50 dark:bg-ink-800/50 p-3">
+                <div className="flex items-center gap-1.5 text-xs text-ink-500 dark:text-ink-400 font-medium">
+                  <ImageIcon className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400" />
                   Images
                 </div>
-                <p className="mt-1 text-lg font-bold text-ink-900">{imageCount}</p>
+                <p className="mt-1 text-lg font-bold text-ink-900 dark:text-white">{imageCount}</p>
               </div>
-              <div className="rounded-xl bg-ink-50 p-3">
-                <div className="flex items-center gap-1.5 text-xs text-ink-500 font-medium">
-                  <Film className="h-3.5 w-3.5 text-purple-600" />
+              <div className="rounded-xl bg-ink-50 dark:bg-ink-800/50 p-3">
+                <div className="flex items-center gap-1.5 text-xs text-ink-500 dark:text-ink-400 font-medium">
+                  <Film className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
                   Videos
                 </div>
-                <p className="mt-1 text-lg font-bold text-ink-900">{videoCount}</p>
+                <p className="mt-1 text-lg font-bold text-ink-900 dark:text-white">{videoCount}</p>
               </div>
             </div>
           </div>
           <p className="mt-4 text-xs text-ink-400">
-            Total of <span className="font-semibold text-ink-700">{mediaList.length} files</span> stored in your library.
+            Total of <span className="font-semibold text-ink-700 dark:text-ink-300">{mediaList.length} files</span> stored in your library.
           </p>
         </Card>
       </div>
@@ -338,8 +338,8 @@ export default function MediaLibrary() {
               onClick={() => setFilterType(tab.key)}
               className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition-all ${
                 filterType === tab.key
-                  ? 'bg-ink-900 text-white shadow-sm'
-                  : 'text-ink-600 hover:bg-ink-100'
+                  ? 'bg-ink-900 text-white shadow-sm dark:bg-brand-600 dark:text-white'
+                  : 'text-ink-600 hover:bg-ink-100 dark:text-ink-300 dark:hover:bg-ink-800'
               }`}
             >
               <span>{tab.label}</span>
@@ -347,7 +347,7 @@ export default function MediaLibrary() {
                 className={`rounded-full px-1.5 py-0.5 text-xs font-semibold ${
                   filterType === tab.key
                     ? 'bg-white/20 text-white'
-                    : 'bg-ink-200/60 text-ink-700'
+                    : 'bg-ink-200/60 dark:bg-ink-800 text-ink-700 dark:text-ink-300'
                 }`}
               >
                 {tab.count}
@@ -365,12 +365,12 @@ export default function MediaLibrary() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search filename..."
-              className="w-full rounded-xl border border-ink-100 bg-white py-2 pl-9 pr-3 text-sm text-ink-700 placeholder:text-ink-400 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10"
+              className="w-full rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 py-2 pl-9 pr-3 text-sm text-ink-700 dark:text-ink-100 placeholder:text-ink-400 dark:placeholder:text-ink-500 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-400 hover:text-ink-600"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-400 hover:text-ink-600 dark:hover:text-ink-200"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -381,31 +381,35 @@ export default function MediaLibrary() {
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as MediaSortOption)}
-              className="rounded-xl border border-ink-100 bg-white py-2 px-3 text-sm text-ink-700 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10"
+              className="rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 py-2 px-3 text-sm text-ink-700 dark:text-ink-200 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10"
             >
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
-              <option value="size_desc">Largest Size</option>
-              <option value="size_asc">Smallest Size</option>
-              <option value="name">File Name A-Z</option>
+              <option value="newest" className="dark:bg-ink-900 dark:text-white">Newest First</option>
+              <option value="oldest" className="dark:bg-ink-900 dark:text-white">Oldest First</option>
+              <option value="size_desc" className="dark:bg-ink-900 dark:text-white">Largest Size</option>
+              <option value="size_asc" className="dark:bg-ink-900 dark:text-white">Smallest Size</option>
+              <option value="name" className="dark:bg-ink-900 dark:text-white">File Name A-Z</option>
             </select>
 
-            <div className="flex items-center rounded-lg border border-ink-200 bg-white p-0.5">
+            <div className="flex items-center rounded-lg border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-0.5">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`flex h-8 w-8 items-center justify-center rounded-md transition-all ${
-                  viewMode === 'grid' ? 'bg-ink-100 text-ink-900 font-semibold' : 'text-ink-400 hover:text-ink-700'
+                className={`p-1.5 rounded-md transition-all ${
+                  viewMode === 'grid'
+                    ? 'bg-ink-100 dark:bg-ink-800 text-ink-900 dark:text-white shadow-xs'
+                    : 'text-ink-400 hover:text-ink-600 dark:text-ink-400 dark:hover:text-ink-200'
                 }`}
-                title="Grid view"
+                title="Grid View"
               >
                 <LayoutGrid className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`flex h-8 w-8 items-center justify-center rounded-md transition-all ${
-                  viewMode === 'list' ? 'bg-ink-100 text-ink-900 font-semibold' : 'text-ink-400 hover:text-ink-700'
+                className={`p-1.5 rounded-md transition-all ${
+                  viewMode === 'list'
+                    ? 'bg-ink-100 dark:bg-ink-800 text-ink-900 dark:text-white shadow-xs'
+                    : 'text-ink-400 hover:text-ink-600 dark:text-ink-400 dark:hover:text-ink-200'
                 }`}
-                title="List view"
+                title="List View"
               >
                 <List className="h-4 w-4" />
               </button>
@@ -662,11 +666,11 @@ export default function MediaLibrary() {
       {/* Preview Modal */}
       {previewItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="relative w-full max-w-4xl rounded-2xl bg-white dark:bg-ink-900 shadow-2xl border border-ink-100 dark:border-ink-800 overflow-hidden flex flex-col max-h-[90vh]">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-ink-100 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 px-6 py-4">
               <div className="min-w-0 flex-1 pr-4">
-                <h3 className="text-base font-semibold text-ink-900 truncate">
+                <h3 className="text-base font-semibold text-ink-900 dark:text-white truncate">
                   {previewItem.original_filename}
                 </h3>
                 <p className="text-xs text-ink-400">
@@ -675,7 +679,7 @@ export default function MediaLibrary() {
               </div>
               <button
                 onClick={() => setPreviewItem(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-700 dark:hover:text-ink-200"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -702,7 +706,7 @@ export default function MediaLibrary() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex flex-wrap items-center justify-between border-t border-ink-100 bg-ink-50 px-6 py-4 gap-3">
+            <div className="flex flex-wrap items-center justify-between border-t border-ink-100 dark:border-ink-800 bg-ink-50 dark:bg-ink-950/60 px-6 py-4 gap-3">
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
@@ -759,16 +763,16 @@ export default function MediaLibrary() {
       {/* Delete Confirmation Modal */}
       {itemToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 text-danger-600">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3 text-danger-600 dark:text-danger-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50 dark:bg-danger-950/60">
                 <Trash2 className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-semibold text-ink-900">Delete Media File</h3>
+              <h3 className="text-base font-semibold text-ink-900 dark:text-white">Delete Media File</h3>
             </div>
-            <p className="text-sm text-ink-600">
+            <p className="text-sm text-ink-600 dark:text-ink-300">
               Are you sure you want to permanently delete{' '}
-              <span className="font-semibold text-ink-900">{itemToDelete.original_filename}</span>?
+              <span className="font-semibold text-ink-900 dark:text-white">{itemToDelete.original_filename}</span>?
               This action cannot be undone.
             </p>
             <div className="flex items-center justify-end gap-3 pt-2">

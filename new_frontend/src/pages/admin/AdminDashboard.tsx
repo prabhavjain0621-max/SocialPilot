@@ -59,10 +59,10 @@ export default function AdminDashboard() {
   const newThisWeek = stats?.new_users_this_week ?? 0;
 
   const topKPIs = [
-    { icon: Users, label: 'Total Users', value: totalUsers, color: 'text-brand-600', bg: 'bg-brand-50' },
-    { icon: PenTool, label: 'Content Creators', value: creatorCount, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    { icon: Shield, label: 'Administrators', value: adminCount, color: 'text-purple-600', bg: 'bg-purple-50' },
-    { icon: TrendingUp, label: 'New This Week', value: newThisWeek, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { icon: Users, label: 'Total Users', value: totalUsers, color: 'text-brand-600 dark:text-brand-400', bg: 'bg-brand-50 dark:bg-brand-950/50' },
+    { icon: PenTool, label: 'Content Creators', value: creatorCount, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/50' },
+    { icon: Shield, label: 'Administrators', value: adminCount, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-950/50' },
+    { icon: TrendingUp, label: 'New This Week', value: newThisWeek, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/50' },
   ];
 
   const quickActions = [
@@ -93,11 +93,11 @@ export default function AdminDashboard() {
                 <kpi.icon className="h-5 w-5" />
               </div>
             </div>
-            <p className="mt-3 text-sm text-ink-500">{kpi.label}</p>
+            <p className="mt-3 text-sm text-ink-500 dark:text-ink-400">{kpi.label}</p>
             {loadingStats ? (
               <Skeleton className="mt-1.5 h-8 w-16" />
             ) : (
-              <p className="mt-1 text-2xl font-bold text-ink-900">{kpi.value}</p>
+              <p className="mt-1 text-2xl font-bold text-ink-900 dark:text-white">{kpi.value}</p>
             )}
           </Card>
         ))}
@@ -107,12 +107,12 @@ export default function AdminDashboard() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card className="p-6">
-            <div className="flex items-center justify-between border-b border-ink-100 pb-4">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 pb-4">
               <div className="flex items-center gap-2.5">
-                <Users className="h-5 w-5 text-ink-700" />
-                <h3 className="text-base font-semibold text-ink-900">Recent Platform Users</h3>
+                <Users className="h-5 w-5 text-ink-700 dark:text-ink-300" />
+                <h3 className="text-base font-semibold text-ink-900 dark:text-white">Recent Platform Users</h3>
               </div>
-              <Link to="/admin/users" className="text-sm font-semibold text-brand-600 hover:text-brand-700">
+              <Link to="/admin/users" className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">
                 View all ({users.length})
               </Link>
             </div>
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
                 {users.slice(0, 6).map((u) => (
                   <div
                     key={u.id}
-                    className="flex items-center justify-between gap-3 rounded-xl border border-ink-100 p-3.5 transition-colors hover:bg-ink-50/50"
+                    className="flex items-center justify-between gap-3 rounded-xl border border-ink-100 dark:border-ink-800 p-3.5 transition-colors hover:bg-ink-50/50 dark:hover:bg-ink-800/40"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
                         {(u.full_name || u.email || '?').charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-ink-900">
+                        <p className="truncate text-sm font-medium text-ink-900 dark:text-white">
                           {u.full_name || 'Unnamed user'}
                         </p>
                         <p className="truncate text-xs text-ink-400">{u.email || 'No email'}</p>
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
                         {ROLE_CONFIGS[normalizeRole(u.role)].label}
                       </Badge>
                       <Link to="/admin/users">
-                        <span className="text-xs text-ink-400 hover:text-brand-600 font-medium">Manage</span>
+                        <span className="text-xs text-ink-400 hover:text-brand-600 dark:hover:text-brand-400 font-medium">Manage</span>
                       </Link>
                     </div>
                   </div>
@@ -165,57 +165,57 @@ export default function AdminDashboard() {
         {/* Quick Actions & Platform Live Metrics */}
         <div className="space-y-6">
           <Card className="p-6">
-            <h3 className="text-base font-semibold text-ink-900 border-b border-ink-100 pb-3">Quick Navigation</h3>
+            <h3 className="text-base font-semibold text-ink-900 dark:text-white border-b border-ink-100 dark:border-ink-800 pb-3">Quick Navigation</h3>
             <div className="mt-4 space-y-2.5">
               {quickActions.map((a) => (
                 <Link
                   key={a.label}
                   to={a.to}
-                  className="group flex items-center gap-3 rounded-xl border border-ink-100 p-3 transition-all hover:border-brand-200 hover:bg-brand-50/30"
+                  className="group flex items-center gap-3 rounded-xl border border-ink-100 dark:border-ink-800 p-3 transition-all hover:border-brand-200 dark:hover:border-brand-800 hover:bg-brand-50/30 dark:hover:bg-brand-950/30"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink-900 text-white transition-transform group-hover:scale-105 group-hover:bg-brand-600">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink-900 dark:bg-ink-800 text-white transition-transform group-hover:scale-105 group-hover:bg-brand-600">
                     <a.icon className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-ink-900 group-hover:text-brand-700">{a.label}</p>
+                    <p className="text-sm font-semibold text-ink-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-300">{a.label}</p>
                     <p className="text-xs text-ink-400 truncate">{a.desc}</p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-ink-300 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600" />
+                  <ArrowRight className="h-4 w-4 text-ink-300 dark:text-ink-600 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600 dark:group-hover:text-brand-400" />
                 </Link>
               ))}
             </div>
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-base font-semibold text-ink-900 border-b border-ink-100 pb-3">Platform Status</h3>
+            <h3 className="text-base font-semibold text-ink-900 dark:text-white border-b border-ink-100 dark:border-ink-800 pb-3">Platform Status</h3>
             <div className="mt-4 space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-ink-600">
-                  <Link2 className="h-4 w-4 text-brand-600" />
+                <div className="flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
+                  <Link2 className="h-4 w-4 text-brand-600 dark:text-brand-400" />
                   Connected Accounts
                 </div>
                 <Badge variant="brand">{stats?.connected_accounts ?? 0}</Badge>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-ink-600">
-                  <CalendarDays className="h-4 w-4 text-purple-600" />
+                <div className="flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
+                  <CalendarDays className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   Total Posts Created
                 </div>
                 <Badge variant="neutral">{stats?.total_posts ?? 0}</Badge>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-ink-600">
-                  <FolderKanban className="h-4 w-4 text-emerald-600" />
+                <div className="flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
+                  <FolderKanban className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   Active Campaigns
                 </div>
                 <Badge variant="neutral">{stats?.active_campaigns ?? 0}</Badge>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-ink-600">
-                  <HardDrive className="h-4 w-4 text-amber-600" />
+                <div className="flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
+                  <HardDrive className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                   Media Assets & Storage
                 </div>
                 <Badge variant="neutral">

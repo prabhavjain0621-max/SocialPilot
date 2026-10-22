@@ -1,6 +1,6 @@
 import type { MediaItem, MediaListResponse, MediaFilterType, MediaSortOption } from '@/types/media';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 function getAuthHeaders() {
   const token = localStorage.getItem('token');
@@ -92,7 +92,7 @@ export function resolveMediaUrl(url?: string): string {
 
 export function handleMediaError(e: React.SyntheticEvent<HTMLImageElement | HTMLVideoElement>, originalUrl?: string) {
   const target = e.currentTarget;
-  if (originalUrl && originalUrl.includes('/media/') && !target.src.includes('localhost:8000')) {
+  if (originalUrl && originalUrl.includes('/media/') && !target.src.startsWith(API_BASE)) {
     const filename = originalUrl.split('/media/').pop()?.split('?')[0];
     if (filename) {
       target.src = `${API_BASE}/media/${filename}`;

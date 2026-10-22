@@ -340,9 +340,9 @@ export default function Campaigns() {
         <div className="flex items-center justify-between">
           <button
             onClick={() => setSelectedCampaignId(null)}
-            className="group flex items-center gap-2 text-sm font-medium text-ink-600 transition-colors hover:text-ink-900"
+            className="group flex items-center gap-2 text-sm font-medium text-ink-600 dark:text-ink-400 transition-colors hover:text-ink-900 dark:hover:text-white"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 bg-white transition-colors group-hover:bg-ink-100">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-800 transition-colors group-hover:bg-ink-100 dark:group-hover:bg-ink-700">
               <ArrowLeft className="h-4 w-4" />
             </div>
             <span>Back to all campaigns</span>
@@ -687,15 +687,15 @@ export default function Campaigns() {
               placeholder="Search campaigns..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-ink-200 bg-white py-2 pl-9 pr-4 text-sm text-ink-800 placeholder:text-ink-400 transition-all focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10"
+              className="w-full rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 py-2 pl-9 pr-4 text-sm text-ink-800 dark:text-ink-100 placeholder:text-ink-400 dark:placeholder:text-ink-500 transition-all focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10"
             />
           </div>
 
-          <div className="flex items-center rounded-xl border border-ink-200 bg-white p-1 shadow-xs">
+          <div className="flex items-center rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 p-1 shadow-xs">
             <button
               onClick={() => setViewMode('grid')}
               className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${
-                viewMode === 'grid' ? 'bg-ink-100 text-ink-900 font-semibold' : 'text-ink-400 hover:text-ink-700'
+                viewMode === 'grid' ? 'bg-ink-100 dark:bg-ink-800 text-ink-900 dark:text-white font-semibold' : 'text-ink-400 dark:text-ink-400 hover:text-ink-700 dark:hover:text-ink-200'
               }`}
               title="Grid view"
             >
@@ -704,7 +704,7 @@ export default function Campaigns() {
             <button
               onClick={() => setViewMode('list')}
               className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${
-                viewMode === 'list' ? 'bg-ink-100 text-ink-900 font-semibold' : 'text-ink-400 hover:text-ink-700'
+                viewMode === 'list' ? 'bg-ink-100 dark:bg-ink-800 text-ink-900 dark:text-white font-semibold' : 'text-ink-400 dark:text-ink-400 hover:text-ink-700 dark:hover:text-ink-200'
               }`}
               title="List view"
             >
@@ -932,14 +932,14 @@ export default function Campaigns() {
   // Modal Render Function
   function renderModal() {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/40 backdrop-blur-sm p-4 overflow-y-auto">
-        <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl border border-ink-100 my-8">
-          <div className="flex items-center justify-between border-b border-ink-100 pb-4 mb-5">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/60 backdrop-blur-sm p-4 overflow-y-auto">
+        <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-ink-900 p-6 shadow-2xl border border-ink-100 dark:border-ink-800 my-8">
+          <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 pb-4 mb-5">
             <div>
-              <h3 className="text-lg font-bold text-ink-900">
+              <h3 className="text-lg font-bold text-ink-900 dark:text-white">
                 {modalMode === 'create' ? 'Create New Campaign' : 'Edit Campaign'}
               </h3>
-              <p className="text-xs text-ink-500 mt-0.5">
+              <p className="text-xs text-ink-500 dark:text-ink-400 mt-0.5">
                 {modalMode === 'create'
                   ? 'Organize posts and set target metrics for your upcoming campaign.'
                   : 'Update campaign details, schedule, or status.'}
@@ -947,7 +947,7 @@ export default function Campaigns() {
             </div>
             <button
               onClick={() => setIsModalOpen(false)}
-              className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-600 transition-colors"
+              className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-600 dark:hover:text-ink-200 transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -1125,25 +1125,25 @@ export default function Campaigns() {
   // Delete Dialog Render Function
   function renderDeleteDialog() {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/40 backdrop-blur-sm p-4">
-        <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-ink-100">
-          <div className="flex items-center gap-3 text-danger-600 mb-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50 border border-danger-100">
-              <Trash2 className="h-5 w-5 text-danger-600" />
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/60 backdrop-blur-sm p-4">
+        <div className="w-full max-w-md rounded-2xl bg-white dark:bg-ink-900 p-6 shadow-2xl border border-ink-100 dark:border-ink-800">
+          <div className="flex items-center gap-3 text-danger-600 dark:text-danger-400 mb-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50 dark:bg-danger-950/60 border border-danger-100 dark:border-danger-900/60">
+              <Trash2 className="h-5 w-5 text-danger-600 dark:text-danger-400" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-ink-900">Delete Campaign</h3>
-              <p className="text-xs text-ink-500">This action cannot be undone.</p>
+              <h3 className="text-base font-bold text-ink-900 dark:text-white">Delete Campaign</h3>
+              <p className="text-xs text-ink-500 dark:text-ink-400">This action cannot be undone.</p>
             </div>
           </div>
 
-          <p className="text-sm text-ink-600 leading-relaxed mb-5">
+          <p className="text-sm text-ink-600 dark:text-ink-300 leading-relaxed mb-5">
             Are you sure you want to delete{' '}
-            <strong className="text-ink-900">"{deletingCampaign?.name}"</strong>? Posts
+            <strong className="text-ink-900 dark:text-white">"{deletingCampaign?.name}"</strong>? Posts
             currently assigned to this campaign will remain intact but will be unassigned.
           </p>
 
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-ink-100">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-ink-100 dark:border-ink-800">
             <Button
               type="button"
               variant="outline"

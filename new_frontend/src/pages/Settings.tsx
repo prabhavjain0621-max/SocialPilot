@@ -13,6 +13,9 @@ import {
   Loader2,
   CheckCircle2,
   Key,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react';
 import PageHeader from '@/components/common/PageHeader';
 import Card from '@/components/common/Card';
@@ -20,9 +23,10 @@ import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
 import UserAccessModal from '@/components/admin/UserAccessModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { normalizeRole } from '@/lib/permissions';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 const tabs = [
   { key: 'profile', label: 'Profile', icon: User },
@@ -47,7 +51,7 @@ function ToggleSwitch({
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-        checked ? 'bg-brand-600' : 'bg-ink-200'
+        checked ? 'bg-brand-600' : 'bg-ink-200 dark:bg-ink-700'
       }`}
     >
       <span
@@ -75,8 +79,8 @@ export default function Settings() {
               onClick={() => setActive(t.key)}
               className={`flex shrink-0 items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all lg:w-full ${
                 active === t.key
-                  ? 'bg-ink-900 text-white shadow-sm'
-                  : 'text-ink-600 hover:bg-ink-100'
+                  ? 'bg-ink-900 text-white shadow-sm dark:bg-brand-600 dark:text-white'
+                  : 'text-ink-600 dark:text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 dark:hover:text-ink-200'
               }`}
             >
               <t.icon className="h-[18px] w-[18px]" />
@@ -339,7 +343,7 @@ function WorkspaceSettings() {
         <div className="mt-6 rounded-xl bg-ink-50 p-4 flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-ink-800">Current Plan</p>
-            <p className="text-xs text-ink-400">Professional Creator — Multi-Platform Scheduling Enabled</p>
+            <p className="text-xs text-ink-400">Professional Creator â€” Multi-Platform Scheduling Enabled</p>
           </div>
           <Badge variant="brand">Active Plan</Badge>
         </div>
@@ -647,10 +651,32 @@ function SecuritySettings() {
 }
 
 function PreferencesSettings() {
+  const { theme, setTheme } = useTheme();
   const [compactLayout, setCompactLayout] = useState(false);
   const [autoPublish, setAutoPublish] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const themeOptions = [
+    {
+      id: 'light' as const,
+      name: 'Light Mode',
+      desc: 'Crisp, bright palette with clear contrast.',
+      icon: Sun,
+    },
+    {
+      id: 'dark' as const,
+      name: 'Dark Mode',
+      desc: 'Sleek dark aesthetic with glowing accents.',
+      icon: Moon,
+    },
+    {
+      id: 'system' as const,
+      name: 'System Default',
+      desc: 'Syncs automatically with device OS preference.',
+      icon: Monitor,
+    },
+  ];
 
   const handleSave = async () => {
     setSaving(true);
@@ -679,46 +705,95 @@ function PreferencesSettings() {
   };
 
   return (
-    <Card className="p-6">
-      <h3 className="text-base font-semibold text-ink-900">Application Preferences</h3>
-      <p className="mt-0.5 text-sm text-ink-400">Customize display density and default post publishing behavior.</p>
+    <div className="space-y-6">
+      {/* Theme & Appearance Card */}
+      <Card className="p-6">
+        <h3 className="text-base font-semibold text-ink-900 dark:text-white">Interface Appearance</h3>
+        <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-400">
+          Choose how SocialPilot looks to you. Select a light or dark theme, or sync with your system.
+        </p>
 
-      {success && (
-        <div className="mt-4 flex items-center gap-2 rounded-xl bg-success-50 p-3 text-xs font-semibold text-success-700 border border-success-200">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-success-600" />
-          <span>{success}</span>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {themeOptions.map((opt) => {
+            const Icon = opt.icon;
+            const isSelected = theme === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setTheme(opt.id)}
+                className={`relative flex flex-col items-start p-4 rounded-2xl border text-left transition-all duration-200 ${
+                  isSelected
+                    ? 'border-brand-500 bg-brand-50/40 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
+                    : 'border-ink-100 dark:border-ink-800 hover:border-ink-200 dark:hover:border-ink-700 bg-ink-50/30 dark:bg-ink-950/30'
+                }`}
+              >
+                <div className="flex w-full items-center justify-between mb-3">
+                  <div
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
+                      isSelected
+                        ? 'bg-brand-600 text-white'
+                        : 'bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  {isSelected && (
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-white">
+                      <Check className="h-3 w-3" />
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm font-semibold text-ink-900 dark:text-white">{opt.name}</p>
+                <p className="mt-1 text-xs text-ink-500 dark:text-ink-400 leading-relaxed">{opt.desc}</p>
+              </button>
+            );
+          })}
         </div>
-      )}
+      </Card>
 
-      <div className="mt-6 space-y-3">
-        <div className="flex items-center justify-between rounded-xl bg-ink-50 p-3.5">
-          <div>
-            <p className="text-sm font-semibold text-ink-800">Compact Layout</p>
-            <p className="text-xs text-ink-400">Reduce spacing for higher information density.</p>
+      {/* General Preferences Card */}
+      <Card className="p-6">
+        <h3 className="text-base font-semibold text-ink-900 dark:text-white">Layout & Publishing</h3>
+        <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-400">Customize display density and default post publishing behavior.</p>
+
+        {success && (
+          <div className="mt-4 flex items-center gap-2 rounded-xl bg-success-50 dark:bg-success-950/40 p-3 text-xs font-semibold text-success-700 dark:text-success-300 border border-success-200 dark:border-success-800">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" />
+            <span>{success}</span>
           </div>
-          <ToggleSwitch checked={compactLayout} onChange={setCompactLayout} />
-        </div>
+        )}
 
-        <div className="flex items-center justify-between rounded-xl bg-ink-50 p-3.5">
-          <div>
-            <p className="text-sm font-semibold text-ink-800">Auto-Publish On Schedule</p>
-            <p className="text-xs text-ink-400">Automatically trigger publisher background worker when post reaches time.</p>
+        <div className="mt-6 space-y-3">
+          <div className="flex items-center justify-between rounded-xl bg-ink-50 dark:bg-ink-800/40 p-3.5">
+            <div>
+              <p className="text-sm font-semibold text-ink-800 dark:text-ink-200">Compact Layout</p>
+              <p className="text-xs text-ink-400 dark:text-ink-400">Reduce spacing for higher information density.</p>
+            </div>
+            <ToggleSwitch checked={compactLayout} onChange={setCompactLayout} />
           </div>
-          <ToggleSwitch checked={autoPublish} onChange={setAutoPublish} />
-        </div>
-      </div>
 
-      <div className="mt-6 flex justify-end">
-        <Button
-          variant="primary"
-          size="md"
-          onClick={handleSave}
-          disabled={saving}
-          leftIcon={saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-        >
-          {saving ? 'Saving...' : 'Save Preferences'}
-        </Button>
-      </div>
-    </Card>
+          <div className="flex items-center justify-between rounded-xl bg-ink-50 dark:bg-ink-800/40 p-3.5">
+            <div>
+              <p className="text-sm font-semibold text-ink-800 dark:text-ink-200">Auto-Publish On Schedule</p>
+              <p className="text-xs text-ink-400 dark:text-ink-400">Automatically trigger publisher background worker when post reaches time.</p>
+            </div>
+            <ToggleSwitch checked={autoPublish} onChange={setAutoPublish} />
+          </div>
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <Button
+            variant="primary"
+            size="md"
+            onClick={handleSave}
+            disabled={saving}
+            leftIcon={saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+          >
+            {saving ? 'Saving...' : 'Save Preferences'}
+          </Button>
+        </div>
+      </Card>
+    </div>
   );
 }

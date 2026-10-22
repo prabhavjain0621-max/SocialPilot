@@ -20,6 +20,7 @@ import {
   Shield,
 } from 'lucide-react';
 import Logo from '@/components/common/Logo';
+import ThemeToggle from '@/components/common/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import NotificationDropdown from '@/components/notifications/NotificationDropdown';
 import { isAdminRole, normalizeRole } from '@/lib/permissions';
@@ -61,8 +62,8 @@ export default function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-ink-50">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-ink-100 bg-white lg:flex">
+    <div className="min-h-screen bg-ink-50 dark:bg-ink-950 text-ink-900 dark:text-ink-100 transition-colors duration-200">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 lg:flex">
         <SidebarContent
           isActive={isActive}
           profile={profile}
@@ -73,12 +74,12 @@ export default function AppLayout() {
       {sidebarOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-ink-950/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-ink-950/60 backdrop-blur-sm lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-ink-100 bg-white lg:hidden animate-slide-right">
+          <aside className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 lg:hidden animate-slide-right">
             <button
-              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg text-ink-500 hover:bg-ink-100"
+              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg text-ink-500 hover:bg-ink-100 dark:text-ink-400 dark:hover:bg-ink-800"
               onClick={() => setSidebarOpen(false)}
             >
               <X className="h-5 w-5" />
@@ -94,9 +95,9 @@ export default function AppLayout() {
       )}
 
       <div className="lg:pl-60">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-ink-100 bg-white/80 px-4 backdrop-blur-xl sm:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-ink-100 dark:border-ink-800 bg-white/80 dark:bg-ink-900/80 px-4 backdrop-blur-xl sm:px-6">
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 hover:bg-ink-100 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 hover:bg-ink-100 dark:text-ink-400 dark:hover:bg-ink-800 lg:hidden"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open menu"
           >
@@ -104,18 +105,18 @@ export default function AppLayout() {
           </button>
 
           <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 dark:text-ink-500" />
             <input
               type="text"
               placeholder="Search..."
-              className="w-full rounded-xl border border-ink-100 bg-ink-50/50 py-2.5 pl-10 pr-4 text-sm text-ink-800 placeholder:text-ink-400 transition-all focus:border-brand-300 focus:bg-white focus:ring-2 focus:ring-brand-500/10"
+              className="w-full rounded-xl border border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-950/60 py-2.5 pl-10 pr-4 text-sm text-ink-800 dark:text-ink-100 placeholder:text-ink-400 dark:placeholder:text-ink-500 transition-all focus:border-brand-300 dark:focus:border-brand-500 focus:bg-white dark:focus:bg-ink-900 focus:ring-2 focus:ring-brand-500/10"
             />
           </div>
 
           {isAdminRole(profile?.role) && (
             <Link
               to="/admin"
-              className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-inset ring-brand-200 transition-colors hover:bg-brand-100"
+              className="flex items-center gap-1.5 rounded-lg bg-brand-50 dark:bg-brand-950/60 px-3 py-1.5 text-xs font-semibold text-brand-700 dark:text-brand-300 ring-1 ring-inset ring-brand-200 dark:ring-brand-800 transition-colors hover:bg-brand-100 dark:hover:bg-brand-900/60"
             >
               <Shield className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Admin Panel</span>
@@ -123,23 +124,24 @@ export default function AppLayout() {
           )}
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <NotificationDropdown />
             <Link
               to="/app/settings"
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 transition-colors hover:bg-ink-100"
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 dark:text-ink-400 transition-colors hover:bg-ink-100 dark:hover:bg-ink-800 dark:hover:text-ink-200"
               aria-label="Settings"
             >
               <Settings className="h-5 w-5" />
             </Link>
-            <div className="mx-1 h-6 w-px bg-ink-100" />
-            <button className="flex items-center gap-2 rounded-xl border border-ink-100 bg-white p-1.5 pr-3 transition-colors hover:bg-ink-50">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink-900 text-white">
+            <div className="mx-1 h-6 w-px bg-ink-100 dark:bg-ink-800" />
+            <button className="flex items-center gap-2 rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900/80 p-1.5 pr-3 transition-colors hover:bg-ink-50 dark:hover:bg-ink-800">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink-900 dark:bg-brand-600 text-white">
                 <User className="h-4 w-4" />
               </div>
-              <span className="hidden text-sm font-medium text-ink-700 sm:block">
+              <span className="hidden text-sm font-medium text-ink-700 dark:text-ink-200 sm:block">
                 {profile?.full_name || 'Your Profile'}
               </span>
-              <ChevronDown className="hidden h-4 w-4 text-ink-400 sm:block" />
+              <ChevronDown className="hidden h-4 w-4 text-ink-400 dark:text-ink-500 sm:block" />
             </button>
           </div>
         </header>
@@ -149,7 +151,7 @@ export default function AppLayout() {
         </main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-around border-t border-ink-100 bg-white/90 backdrop-blur-xl lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-around border-t border-ink-100 dark:border-ink-800 bg-white/90 dark:bg-ink-900/90 backdrop-blur-xl lg:hidden">
         {mobileNav.map((item) => {
           const active = isActive(item.to, item.end);
           return (
@@ -157,10 +159,10 @@ export default function AppLayout() {
               key={item.to}
               to={item.to}
               className={`flex flex-col items-center gap-1 py-3 px-2 text-[10px] font-medium transition-colors ${
-                active ? 'text-brand-600' : 'text-ink-400'
+                active ? 'text-brand-600 dark:text-brand-400' : 'text-ink-400 dark:text-ink-500'
               }`}
             >
-              <item.icon className={`h-5 w-5 ${active ? 'text-brand-600' : 'text-ink-400'}`} />
+              <item.icon className={`h-5 w-5 ${active ? 'text-brand-600 dark:text-brand-400' : 'text-ink-400 dark:text-ink-500'}`} />
               {item.label}
             </Link>
           );
@@ -188,22 +190,22 @@ function SidebarContent({
       </div>
 
       <div className="px-3 pb-2">
-        <button className="flex w-full items-center justify-between rounded-xl border border-ink-100 bg-ink-50/50 px-3 py-2.5 text-left transition-colors hover:bg-ink-50">
+        <button className="flex w-full items-center justify-between rounded-xl border border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-950/50 px-3 py-2.5 text-left transition-colors hover:bg-ink-50 dark:hover:bg-ink-800/60">
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
               <Briefcase className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-ink-800">My Workspace</p>
-              <p className="text-xs text-ink-400">Free plan</p>
+              <p className="text-sm font-semibold text-ink-800 dark:text-ink-200">My Workspace</p>
+              <p className="text-xs text-ink-400 dark:text-ink-500">Free plan</p>
             </div>
           </div>
-          <ChevronDown className="h-4 w-4 text-ink-400" />
+          <ChevronDown className="h-4 w-4 text-ink-400 dark:text-ink-500" />
         </button>
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-2">
-        <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-ink-400">
+        <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-ink-400 dark:text-ink-500">
           Menu
         </p>
         <ul className="space-y-1">
@@ -216,13 +218,13 @@ function SidebarContent({
                   onClick={onNavigate}
                   className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                     active
-                      ? 'bg-ink-900 text-white shadow-sm'
-                      : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900'
+                      ? 'bg-ink-900 text-white shadow-sm dark:bg-brand-600 dark:text-white'
+                      : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-ink-800 dark:hover:text-white'
                   }`}
                 >
                   <item.icon
                     className={`h-[18px] w-[18px] transition-colors ${
-                      active ? 'text-white' : 'text-ink-400 group-hover:text-ink-600'
+                      active ? 'text-white' : 'text-ink-400 group-hover:text-ink-600 dark:text-ink-400 dark:group-hover:text-ink-200'
                     }`}
                   />
                   {item.label}
@@ -234,35 +236,35 @@ function SidebarContent({
 
         {isAdminRole(profile?.role) && (
           <>
-            <div className="my-4 border-t border-ink-100" />
+            <div className="my-4 border-t border-ink-100 dark:border-ink-800" />
             <Link
               to="/admin"
               onClick={onNavigate}
-              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-brand-700 transition-all hover:bg-brand-50"
+              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-brand-700 dark:text-brand-300 transition-all hover:bg-brand-50 dark:hover:bg-brand-950/40"
             >
-              <Shield className="h-[18px] w-[18px] text-brand-600" />
+              <Shield className="h-[18px] w-[18px] text-brand-600 dark:text-brand-400" />
               Admin Panel
             </Link>
           </>
         )}
       </nav>
 
-      <div className="border-t border-ink-100 p-3">
+      <div className="border-t border-ink-100 dark:border-ink-800 p-3">
         <div className="flex items-center gap-3 rounded-xl p-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink-100 text-ink-500">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink-100 dark:bg-ink-800 text-ink-500 dark:text-ink-300">
             <User className="h-5 w-5" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="truncate text-sm font-medium text-ink-800">
+            <p className="truncate text-sm font-medium text-ink-800 dark:text-ink-200">
               {profile?.full_name || 'Your Profile'}
             </p>
-            <p className="truncate text-xs text-ink-400">
+            <p className="truncate text-xs text-ink-400 dark:text-ink-500">
               {profile?.role ? normalizeRole(profile.role) : 'Content Creator'}
             </p>
           </div>
           <button
             onClick={onSignOut}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 transition-colors hover:bg-danger-50 hover:text-danger-600"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-400 transition-colors hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-950/40 dark:hover:text-danger-400"
             aria-label="Sign out"
           >
             <LogOut className="h-4 w-4" />

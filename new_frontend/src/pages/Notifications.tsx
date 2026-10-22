@@ -133,15 +133,15 @@ export default function Notifications() {
             onClick={() => setActiveFilter(f.key as any)}
             className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition-all ${
               activeFilter === f.key
-                ? 'bg-ink-900 text-white shadow-soft'
-                : 'bg-white text-ink-600 border border-ink-100 hover:bg-ink-50'
+                ? 'bg-ink-900 text-white shadow-soft dark:bg-brand-600 dark:text-white'
+                : 'bg-white text-ink-600 border border-ink-100 hover:bg-ink-50 dark:bg-ink-900 dark:border-ink-800 dark:text-ink-300 dark:hover:bg-ink-800'
             }`}
           >
             <span>{f.label}</span>
             {f.count !== undefined && f.count > 0 && (
               <span
                 className={`rounded-full px-1.5 py-0.2 text-[10px] ${
-                  activeFilter === f.key ? 'bg-white/20 text-white' : 'bg-ink-100 text-ink-700'
+                  activeFilter === f.key ? 'bg-white/20 text-white' : 'bg-ink-100 text-ink-700 dark:bg-ink-800 dark:text-ink-300'
                 }`}
               >
                 {f.count}
@@ -169,7 +169,7 @@ export default function Notifications() {
           />
         </Card>
       ) : (
-        <Card className="overflow-hidden divide-y divide-ink-100">
+        <Card className="overflow-hidden divide-y divide-ink-100 dark:divide-ink-800">
           {filteredNotifications.map((notif) => {
             const isPublished = notif.type === 'post_published';
             const isFailed = notif.type === 'post_failed';
@@ -178,17 +178,17 @@ export default function Notifications() {
               <div
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif)}
-                className={`flex items-start gap-4 p-5 transition-all cursor-pointer hover:bg-ink-50/70 ${
-                  !notif.is_read ? 'bg-brand-50/25 border-l-4 border-l-brand-600' : ''
+                className={`flex items-start gap-4 p-5 transition-all cursor-pointer hover:bg-ink-50/70 dark:hover:bg-ink-800/40 ${
+                  !notif.is_read ? 'bg-brand-50/25 dark:bg-brand-950/40 border-l-4 border-l-brand-600' : ''
                 }`}
               >
                 <div
                   className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
                     isPublished
-                      ? 'bg-emerald-100 text-emerald-600'
+                      ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'
                       : isFailed
-                      ? 'bg-danger-100 text-danger-600'
-                      : 'bg-brand-100 text-brand-600'
+                      ? 'bg-danger-100 dark:bg-danger-950/60 text-danger-600 dark:text-danger-400'
+                      : 'bg-brand-100 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400'
                   }`}
                 >
                   {isPublished ? (

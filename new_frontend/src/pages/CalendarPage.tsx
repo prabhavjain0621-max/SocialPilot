@@ -35,7 +35,7 @@ import {
   formatDateTime,
 } from '@/types/post';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 function getPostTimingLabel(post: PostOut): string {
   if (post.scheduled_time) {
@@ -345,15 +345,15 @@ export default function CalendarPage() {
       {/* Main Container */}
       <Card className="overflow-hidden">
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink-100 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink-100 dark:border-ink-800 p-4">
           <div className="flex items-center gap-4">
-            <div className="flex items-center rounded-lg border border-ink-200 bg-ink-50 p-0.5">
+            <div className="flex items-center rounded-lg border border-ink-200 dark:border-ink-800 bg-ink-50 dark:bg-ink-950 p-0.5">
               <button
                 onClick={() => setViewMode('list')}
                 className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${
                   viewMode === 'list'
-                    ? 'bg-white text-ink-900 shadow-soft'
-                    : 'text-ink-500 hover:text-ink-700'
+                    ? 'bg-white dark:bg-ink-800 text-ink-900 dark:text-white shadow-soft'
+                    : 'text-ink-500 dark:text-ink-400 hover:text-ink-700 dark:hover:text-ink-200'
                 }`}
               >
                 <LayoutList className="h-3.5 w-3.5" />
@@ -363,8 +363,8 @@ export default function CalendarPage() {
                 onClick={() => setViewMode('calendar')}
                 className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${
                   viewMode === 'calendar'
-                    ? 'bg-white text-ink-900 shadow-soft'
-                    : 'text-ink-500 hover:text-ink-700'
+                    ? 'bg-white dark:bg-ink-800 text-ink-900 dark:text-white shadow-soft'
+                    : 'text-ink-500 dark:text-ink-400 hover:text-ink-700 dark:hover:text-ink-200'
                 }`}
               >
                 <CalendarIcon className="h-3.5 w-3.5" />
@@ -376,14 +376,14 @@ export default function CalendarPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={prevPeriod}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 text-ink-600 hover:bg-ink-100"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 dark:border-ink-800 text-ink-600 dark:text-ink-300 hover:bg-ink-100 dark:hover:bg-ink-800"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <span className="text-sm font-semibold text-ink-900">{currentMonthLabel}</span>
+                <span className="text-sm font-semibold text-ink-900 dark:text-white">{currentMonthLabel}</span>
                 <button
                   onClick={nextPeriod}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 text-ink-600 hover:bg-ink-100"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-200 dark:border-ink-800 text-ink-600 dark:text-ink-300 hover:bg-ink-100 dark:hover:bg-ink-800"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
@@ -394,11 +394,11 @@ export default function CalendarPage() {
           <div className="flex flex-wrap items-center gap-3">
             {/* Status filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-ink-500">Status:</span>
+              <span className="text-xs font-medium text-ink-500 dark:text-ink-400">Status:</span>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="rounded-lg border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-medium text-ink-700 focus:border-brand-300 focus:outline-none"
+                className="rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 px-2.5 py-1.5 text-xs font-medium text-ink-700 dark:text-ink-200 focus:border-brand-300 focus:outline-none"
               >
                 <option value="all">All Statuses</option>
                 <option value="scheduled">Scheduled</option>
@@ -412,11 +412,11 @@ export default function CalendarPage() {
 
             {/* Platform filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-ink-500">Platform:</span>
+              <span className="text-xs font-medium text-ink-500 dark:text-ink-400">Platform:</span>
               <select
                 value={platformFilter}
                 onChange={(e) => setPlatformFilter(e.target.value)}
-                className="rounded-lg border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-medium text-ink-700 focus:border-brand-300 focus:outline-none"
+                className="rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 px-2.5 py-1.5 text-xs font-medium text-ink-700 dark:text-ink-200 focus:border-brand-300 focus:outline-none"
               >
                 <option value="all">All Platforms</option>
                 {platforms.map((p) => (
@@ -466,14 +466,14 @@ export default function CalendarPage() {
             </Button>
           </div>
         ) : viewMode === 'list' ? (
-          <div className="divide-y divide-ink-100">
+          <div className="divide-y divide-ink-100 dark:divide-ink-800">
             {filteredPosts.map((post) => {
               const statusLower = post.status.toLowerCase();
               const isEditable = statusLower === 'draft' || statusLower === 'scheduled';
               const isPublished = statusLower === 'published';
 
               return (
-                <div key={post.id} className="p-5 transition-colors hover:bg-ink-50/40">
+                <div key={post.id} className="p-5 transition-colors hover:bg-ink-50/40 dark:hover:bg-ink-800/40">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     {/* Left: Info */}
                     <div className="space-y-2.5 flex-1 min-w-0">
@@ -489,12 +489,12 @@ export default function CalendarPage() {
                           </Badge>
                         )}
 
-                        <span className="flex items-center gap-1 text-xs font-medium text-ink-500">
+                        <span className="flex items-center gap-1 text-xs font-medium text-ink-500 dark:text-ink-400">
                           {statusLower === 'publishing' ||
                           (statusLower === 'scheduled' && !post.scheduled_time) ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin text-brand-600" />
                           ) : (
-                            <Clock className="h-3.5 w-3.5 text-ink-400" />
+                            <Clock className="h-3.5 w-3.5 text-ink-400 dark:text-ink-500" />
                           )}
                           {getPostTimingLabel(post)}
                         </span>
@@ -503,24 +503,24 @@ export default function CalendarPage() {
                       {/* Title & Content */}
                       <div>
                         {post.title && (
-                          <h4 className="text-sm font-bold text-ink-900 flex items-center gap-1.5 mb-1">
+                          <h4 className="text-sm font-bold text-ink-900 dark:text-white flex items-center gap-1.5 mb-1">
                             <Video className="h-3.5 w-3.5 text-red-600" />
                             {post.title}
                           </h4>
                         )}
-                        <p className="text-sm text-ink-700 whitespace-pre-wrap line-clamp-3">
+                        <p className="text-sm text-ink-700 dark:text-ink-200 whitespace-pre-wrap line-clamp-3">
                           {post.content}
                         </p>
                       </div>
 
                       {/* Platform breakdown */}
                       <div className="pt-1">
-                        <p className="text-xs font-medium text-ink-400 mb-1.5">
+                        <p className="text-xs font-medium text-ink-400 dark:text-ink-500 mb-1.5">
                           Targeted Platforms & Status:
                         </p>
                         <div className="flex flex-wrap items-center gap-2">
                           {post.platform_posts.length === 0 ? (
-                            <span className="text-xs italic text-ink-400">
+                            <span className="text-xs italic text-ink-400 dark:text-ink-500">
                               No target platforms assigned (Draft)
                             </span>
                           ) : (
@@ -531,16 +531,16 @@ export default function CalendarPage() {
                               return (
                                 <div
                                   key={pp.id}
-                                  className="inline-flex items-center gap-1.5 rounded-lg border border-ink-200 bg-white px-2.5 py-1 text-xs shadow-xs"
+                                  className="inline-flex items-center gap-1.5 rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 px-2.5 py-1 text-xs shadow-xs"
                                 >
                                   <div
                                     className={`flex h-4 w-4 items-center justify-center rounded ${
-                                      p?.bg || 'bg-ink-50'
-                                    } ${p?.color || 'text-ink-600'}`}
+                                      p?.bg || 'bg-ink-50 dark:bg-ink-800'
+                                    } ${p?.color || 'text-ink-600 dark:text-ink-300'}`}
                                   >
                                     <PlatformIcon platform={pKey} className="h-3 w-3" />
                                   </div>
-                                  <span className="font-semibold text-ink-800 capitalize">
+                                  <span className="font-semibold text-ink-800 dark:text-ink-200 capitalize">
                                     {pp.platform}:
                                   </span>
                                   <Badge variant={getPlatformStatusBadgeVariant(pp.status)} size="sm">
@@ -643,26 +643,26 @@ export default function CalendarPage() {
 
       {/* Publishing History Logs Modal */}
       {activeLogPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/60 p-4 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl rounded-2xl border border-ink-100 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="relative w-full max-w-2xl rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-ink-100 p-5 bg-ink-50/50">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 p-5 bg-ink-50/50 dark:bg-ink-950/40">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400">
                   <History className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold text-ink-900">Publishing History & Logs</h3>
+                  <h3 className="text-base font-semibold text-ink-900 dark:text-white">Publishing History & Logs</h3>
                   <p className="text-xs text-ink-400">
                     Post #{activeLogPost.id} &bull; Status:{' '}
-                    <span className="font-semibold capitalize">{activeLogPost.status}</span>
+                    <span className="font-semibold capitalize text-ink-700 dark:text-ink-200">{activeLogPost.status}</span>
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveLogPost(null)}
-                className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 hover:text-ink-600 transition-colors"
+                className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-600 dark:hover:text-ink-200 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -671,7 +671,7 @@ export default function CalendarPage() {
             {/* Modal Body */}
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {/* Post Content Snippet */}
-              <div className="rounded-xl border border-ink-100 bg-ink-50/40 p-3.5 text-xs text-ink-700 space-y-1">
+              <div className="rounded-xl border border-ink-100 dark:border-ink-800 bg-ink-50/40 dark:bg-ink-850/40 p-3.5 text-xs text-ink-700 dark:text-ink-200 space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-ink-900">Post Content</span>
                   {activeLogPost.is_recurring && (
@@ -722,7 +722,7 @@ export default function CalendarPage() {
                       return (
                         <div
                           key={log.id}
-                          className="flex flex-col sm:flex-row sm:items-start gap-3 rounded-xl border border-ink-100 bg-white p-3.5 shadow-xs transition-colors hover:border-ink-200"
+                          className="flex flex-col sm:flex-row sm:items-start gap-3 rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-850 p-3.5 shadow-xs transition-colors hover:border-ink-200 dark:hover:border-ink-700"
                         >
                           <div className="flex items-center gap-2.5 shrink-0">
                             <div
@@ -733,7 +733,7 @@ export default function CalendarPage() {
                               <PlatformIcon platform={pKey} className="h-4 w-4" />
                             </div>
                             <div>
-                              <p className="text-xs font-semibold capitalize text-ink-900">
+                              <p className="text-xs font-semibold capitalize text-ink-900 dark:text-white">
                                 {log.platform}
                               </p>
                               <p className="text-[11px] text-ink-400">
@@ -756,7 +756,7 @@ export default function CalendarPage() {
                             {log.message ? (
                               <p
                                 className={`text-xs ${
-                                  isFailure ? 'text-danger-700 font-mono bg-danger-50/50 p-2 rounded-lg' : 'text-ink-700'
+                                  isFailure ? 'text-danger-700 dark:text-danger-300 font-mono bg-danger-50/50 dark:bg-danger-950/40 p-2 rounded-lg' : 'text-ink-700 dark:text-ink-200'
                                 } whitespace-pre-wrap break-words`}
                               >
                                 {log.message}
@@ -774,7 +774,7 @@ export default function CalendarPage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex justify-end border-t border-ink-100 p-4 bg-ink-50/30">
+            <div className="flex justify-end border-t border-ink-100 dark:border-ink-800 p-4 bg-ink-50/30 dark:bg-ink-950/40">
               <Button variant="outline" size="sm" onClick={() => setActiveLogPost(null)}>
                 Close
               </Button>
@@ -811,17 +811,17 @@ function MonthCalendarView({
 
   return (
     <div>
-      <div className="grid grid-cols-7 border-b border-ink-100 bg-ink-50/50">
+      <div className="grid grid-cols-7 border-b border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-900/50">
         {dayNames.map((d) => (
           <div
             key={d}
-            className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-ink-400"
+            className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-ink-400 dark:text-ink-500"
           >
             {d}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 divide-x divide-y divide-ink-100">
+      <div className="grid grid-cols-7 divide-x divide-y divide-ink-100 dark:divide-ink-800">
         {Array.from({ length: totalCells }).map((_, i) => {
           const dayNumber = i - firstDayIndex + 1;
           const isCurrentMonthDay = dayNumber > 0 && dayNumber <= daysInMonth;
@@ -844,19 +844,21 @@ function MonthCalendarView({
             <div
               key={i}
               className={`group min-h-[120px] p-2 transition-colors ${
-                isCurrentMonthDay ? 'bg-white hover:bg-ink-50/30' : 'bg-ink-50/30 text-ink-300'
+                isCurrentMonthDay
+                  ? 'bg-white dark:bg-ink-900 hover:bg-ink-50/30 dark:hover:bg-ink-800/40'
+                  : 'bg-ink-50/30 dark:bg-ink-950/40 text-ink-300 dark:text-ink-600'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span
                   className={`text-xs font-semibold ${
-                    isCurrentMonthDay ? 'text-ink-700' : 'text-ink-300'
+                    isCurrentMonthDay ? 'text-ink-700 dark:text-ink-200' : 'text-ink-300 dark:text-ink-600'
                   }`}
                 >
                   {isCurrentMonthDay ? dayNumber : ''}
                 </span>
                 {dayPosts.length > 0 && (
-                  <span className="text-[10px] font-medium text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-medium text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 px-1.5 py-0.5 rounded-full">
                     {dayPosts.length} post{dayPosts.length > 1 ? 's' : ''}
                   </span>
                 )}
@@ -871,7 +873,7 @@ function MonthCalendarView({
                   return (
                     <div
                       key={post.id}
-                      className="rounded-lg border border-ink-200 bg-white p-2 text-xs shadow-xs hover:border-brand-300 hover:shadow-soft"
+                      className="rounded-lg border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-800/90 p-2 text-xs shadow-xs hover:border-brand-300 dark:hover:border-brand-500 hover:shadow-soft"
                     >
                       <div className="flex items-center justify-between gap-1 mb-1">
                         <div className="flex items-center gap-1">
@@ -880,7 +882,7 @@ function MonthCalendarView({
                           </Badge>
                           {post.is_recurring && (
                             <span title={`Repeats ${post.recurrence_pattern || 'regularly'}`}>
-                              <Repeat className="h-3 w-3 text-accent-600" />
+                              <Repeat className="h-3 w-3 text-accent-600 dark:text-accent-400" />
                             </span>
                           )}
                         </div>
@@ -888,7 +890,7 @@ function MonthCalendarView({
                           <button
                             type="button"
                             onClick={() => onOpenLogs(post)}
-                            className="text-ink-400 hover:text-brand-600"
+                            className="text-ink-400 hover:text-brand-600 dark:hover:text-brand-400"
                             title="View publishing logs"
                           >
                             <History className="h-3 w-3" />
@@ -897,7 +899,7 @@ function MonthCalendarView({
                             <button
                               type="button"
                               onClick={() => onEditPost(post)}
-                              className="text-ink-400 hover:text-brand-600"
+                              className="text-ink-400 hover:text-brand-600 dark:hover:text-brand-400"
                               title="Edit post"
                             >
                               <PenSquare className="h-3 w-3" />
@@ -907,7 +909,7 @@ function MonthCalendarView({
                             type="button"
                             onClick={() => onDeletePost(post.id)}
                             disabled={deletingId === post.id || isPublished}
-                            className={`text-ink-400 hover:text-danger-600 ${
+                            className={`text-ink-400 hover:text-danger-600 dark:hover:text-danger-400 ${
                               isPublished ? 'opacity-30 cursor-not-allowed' : ''
                             }`}
                             title={isPublished ? 'Cannot delete published posts' : 'Delete post'}
@@ -916,7 +918,7 @@ function MonthCalendarView({
                           </button>
                         </div>
                       </div>
-                      <p className="font-semibold text-ink-900 line-clamp-1">
+                      <p className="font-semibold text-ink-900 dark:text-white line-clamp-1">
                         {post.title || post.content}
                       </p>
                       <div className="mt-1 flex items-center gap-1">

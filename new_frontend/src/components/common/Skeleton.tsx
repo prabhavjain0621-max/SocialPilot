@@ -22,7 +22,7 @@ export function SkeletonText({ lines = 3, className = '' }: { lines?: number; cl
 
 export function SkeletonCard({ className = '' }: { className?: string }) {
   return (
-    <div className={`bg-white border border-ink-100 rounded-2xl p-5 ${className}`}>
+    <div className={`bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800 rounded-2xl p-5 ${className}`}>
       <div className="flex items-center gap-3">
         <Skeleton className="h-10 w-10" rounded="rounded-xl" />
         <div className="flex-1 space-y-2">

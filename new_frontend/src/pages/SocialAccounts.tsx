@@ -7,7 +7,7 @@ import Badge from '@/components/common/Badge';
 import EmptyState from '@/components/common/EmptyState';
 import { platforms, type PlatformKey } from '@/components/common/PlatformIcons';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 interface SocialAccountData {
   id: number;
@@ -179,8 +179,8 @@ export default function SocialAccounts() {
       />
 
       {/* Summary bar */}
-      <div className="flex items-center gap-4 rounded-2xl border border-ink-100 bg-white p-5 shadow-soft">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink-50 text-ink-400">
+      <div className="flex items-center gap-4 rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 shadow-soft">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink-50 dark:bg-ink-800 text-ink-400">
           <Link2 className="h-6 w-6" />
         </div>
         <div className="flex-1">
@@ -338,8 +338,8 @@ export default function SocialAccounts() {
       {/* Connect Modal */}
       {modalPlatform && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/40 backdrop-blur-sm">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl border border-ink-100">
-            <div className="flex items-center justify-between border-b border-ink-100 pb-3 mb-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-ink-900 p-6 shadow-xl border border-ink-100 dark:border-ink-800">
+            <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 pb-3 mb-4">
               <h3 className="text-base font-bold text-ink-900">
                 Connect {platforms.find(x => x.key === modalPlatform)?.name}
               </h3>

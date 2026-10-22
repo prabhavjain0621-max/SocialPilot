@@ -78,8 +78,8 @@ export default function SignUp() {
                   onClick={() => setRole(r)}
                   className={`flex flex-col items-start rounded-xl border p-3 text-left transition-all relative ${
                     isSelected
-                      ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20 shadow-sm'
-                      : 'border-ink-100 bg-white hover:border-ink-200 hover:bg-ink-50/50'
+                      ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/40 dark:border-brand-500 ring-2 ring-brand-500/20 shadow-sm'
+                      : 'border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 hover:border-ink-200 dark:hover:border-ink-700 hover:bg-ink-50/50 dark:hover:bg-ink-800/40'
                   }`}
                 >
                   <div className="flex items-center justify-between w-full mb-2">
@@ -87,7 +87,7 @@ export default function SignUp() {
                       className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
                         isSelected
                           ? 'bg-brand-600 text-white'
-                          : 'bg-ink-100 text-ink-500'
+                          : 'bg-ink-100 dark:bg-ink-800 text-ink-500 dark:text-ink-400'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -99,7 +99,7 @@ export default function SignUp() {
                     )}
                   </div>
 
-                  <p className="text-xs font-semibold text-ink-900">{config.label}</p>
+                  <p className="text-xs font-semibold text-ink-900 dark:text-white">{config.label}</p>
                   <p className="mt-1 text-[11px] text-ink-500 leading-snug">
                                     
                   </p>

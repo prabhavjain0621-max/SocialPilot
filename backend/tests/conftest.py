@@ -21,7 +21,8 @@ import tasks
 
 # Test database connection configuration
 TEST_DB_PASSWORD = quote("Prabhav@1972", safe="")
-TEST_DATABASE_URL = f"postgresql://postgres:{TEST_DB_PASSWORD}@localhost:5432/socialpilot_test"
+from database import DATABASE_URL as _MAIN_URL
+TEST_DATABASE_URL = _MAIN_URL.rsplit("/", 1)[0] + "/socialpilot_test"
 
 test_engine = create_engine(TEST_DATABASE_URL, pool_pre_ping=True)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)

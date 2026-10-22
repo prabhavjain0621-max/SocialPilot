@@ -40,7 +40,7 @@ import { getCampaignAnalytics, getOverviewAnalytics } from '@/services/analytics
 import type { CampaignOut } from '@/types/campaign';
 import type { CampaignAnalytics, PostAnalytics, OverviewAnalytics, CampaignTotals } from '@/types/analytics';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 function normalizePlatform(p: string): PlatformKey {
   const norm = (p || '').toLowerCase();
@@ -296,7 +296,7 @@ export default function Analytics() {
               <select
                 value={selectedFilter}
                 onChange={(e) => handleFilterChange(e.target.value)}
-                className="rounded-xl border border-ink-200 bg-white py-2 pl-3 pr-8 text-sm font-semibold text-ink-800 shadow-soft focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10"
+                className="rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 py-2 pl-3 pr-8 text-sm font-semibold text-ink-800 dark:text-ink-100 shadow-soft focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10 cursor-pointer"
               >
                 <option value="all">Overview (All Posts & Campaigns)</option>
                 {campaigns.length > 0 && (
@@ -528,13 +528,13 @@ export default function Analytics() {
 
       {/* Drill-down Post Details Modal */}
       {selectedPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/40 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl border border-ink-100 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between border-b border-ink-100 pb-4 mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="w-full max-w-2xl rounded-2xl bg-white dark:bg-ink-900 p-6 shadow-2xl border border-ink-100 dark:border-ink-800 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-start justify-between border-b border-ink-100 dark:border-ink-800 pb-4 mb-4">
               <div>
                 <div className="flex items-center gap-2">
                   <Badge variant="brand">Post #{selectedPost.post_id}</Badge>
-                  <h3 className="text-lg font-bold text-ink-900">
+                  <h3 className="text-lg font-bold text-ink-900 dark:text-white">
                     {selectedPost.title || 'Untitled Post'}
                   </h3>
                 </div>
@@ -542,7 +542,7 @@ export default function Analytics() {
               </div>
               <button
                 onClick={() => setSelectedPost(null)}
-                className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+                className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800 hover:text-ink-700 dark:hover:text-ink-200 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -557,15 +557,15 @@ export default function Analytics() {
                   return (
                     <div
                       key={idx}
-                      className="rounded-xl border border-ink-100 bg-ink-50/50 p-4 transition-all hover:bg-ink-50"
+                      className="rounded-xl border border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-850/50 p-4 transition-all hover:bg-ink-50 dark:hover:bg-ink-800/40"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-soft">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white dark:bg-ink-800 shadow-soft border border-transparent dark:border-ink-700">
                             <PlatformIcon platform={platformKey} className="h-5 w-5" />
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-ink-900 capitalize">{plat.platform}</p>
+                            <p className="text-sm font-bold text-ink-900 dark:text-white capitalize">{plat.platform}</p>
                             <p className="text-xs text-ink-400 capitalize">Status: {plat.status}</p>
                           </div>
                         </div>
@@ -576,47 +576,47 @@ export default function Analytics() {
                       </div>
 
                       {plat.available ? (
-                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 pt-2 border-t border-ink-100">
+                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 pt-2 border-t border-ink-100 dark:border-ink-800">
                           {plat.likes !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Likes</span>
-                              <p className="text-base font-bold text-ink-900">{plat.likes.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.likes.toLocaleString()}</p>
                             </div>
                           )}
                           {plat.comments !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Comments</span>
-                              <p className="text-base font-bold text-ink-900">{plat.comments.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.comments.toLocaleString()}</p>
                             </div>
                           )}
                           {plat.views !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Views</span>
-                              <p className="text-base font-bold text-ink-900">{plat.views.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.views.toLocaleString()}</p>
                             </div>
                           )}
                           {plat.reach !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Reach</span>
-                              <p className="text-base font-bold text-ink-900">{plat.reach.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.reach.toLocaleString()}</p>
                             </div>
                           )}
                           {plat.shares !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Shares</span>
-                              <p className="text-base font-bold text-ink-900">{plat.shares.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.shares.toLocaleString()}</p>
                             </div>
                           )}
                           {plat.saved !== undefined && (
-                            <div className="rounded-lg bg-white p-2.5 shadow-soft border border-ink-100">
+                            <div className="rounded-lg bg-white dark:bg-ink-800/80 p-2.5 shadow-soft border border-ink-100 dark:border-ink-700/60">
                               <span className="text-xs text-ink-400">Saved</span>
-                              <p className="text-base font-bold text-ink-900">{plat.saved.toLocaleString()}</p>
+                              <p className="text-base font-bold text-ink-900 dark:text-white">{plat.saved.toLocaleString()}</p>
                             </div>
                           )}
                         </div>
                       ) : (
-                        <div className="flex items-start gap-2 rounded-lg bg-amber-50/70 p-3 text-xs text-amber-800 border border-amber-200">
-                          <Info className="h-4 w-4 shrink-0 text-amber-600 mt-0.5" />
+                        <div className="flex items-start gap-2 rounded-lg bg-amber-50/70 dark:bg-amber-950/30 p-3 text-xs text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900/50">
+                          <Info className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
                           <p>{plat.reason || 'Live statistics not available for this platform item.'}</p>
                         </div>
                       )}
@@ -626,7 +626,7 @@ export default function Analytics() {
               )}
             </div>
 
-            <div className="mt-6 flex justify-between gap-3 border-t border-ink-100 pt-4">
+            <div className="mt-6 flex justify-between gap-3 border-t border-ink-100 dark:border-ink-800 pt-4">
               <Button
                 variant="outline"
                 size="sm"

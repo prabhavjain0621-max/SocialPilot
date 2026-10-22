@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import ThemeToggle from '@/components/common/ThemeToggle';
 
 export default function AuthLayout({
   title,
@@ -12,7 +13,7 @@ export default function AuthLayout({
   footer: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-ink-50 dark:bg-ink-950 transition-colors duration-200">
       {/* Left side — branding */}
       <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-ink-950 p-12 lg:flex">
         <div className="absolute -left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-brand-600/20 blur-[120px]" />
@@ -65,30 +66,35 @@ export default function AuthLayout({
       </div>
 
       {/* Right side — form */}
-      <div className="flex w-full flex-col justify-center px-5 py-12 sm:px-12 lg:w-1/2">
+      <div className="relative flex w-full flex-col justify-center px-5 py-12 sm:px-12 lg:w-1/2">
+        <div className="absolute right-6 top-6">
+          <ThemeToggle />
+        </div>
+
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link to="/" className="flex items-center gap-2.5 font-semibold">
               <svg viewBox="0 0 32 32" fill="none" className="h-8 w-8">
-                <rect x="2" y="2" width="28" height="28" rx="8" fill="#0f1115" />
+                <rect x="2" y="2" width="28" height="28" rx="8" fill="#0f1115" className="dark:fill-white" />
                 <path
                   d="M10 12.5c0-1.4 1.1-2.5 2.5-2.5h7c1.4 0 2.5 1.1 2.5 2.5v4c0 1.4-1.1 2.5-2.5 2.5h-1.8L14 22v-3h-1.5c-1.4 0-2.5-1.1-2.5-2.5v-4z"
                   fill="white"
+                  className="dark:fill-[#0f1115]"
                 />
                 <circle cx="13" cy="14.5" r="1" fill="#818cf8" />
                 <circle cx="16" cy="14.5" r="1" fill="#818cf8" />
                 <circle cx="19" cy="14.5" r="1" fill="#818cf8" />
               </svg>
-              <span className="text-[17px] tracking-tight text-ink-900">SocialPilot</span>
+              <span className="text-[17px] tracking-tight text-ink-900 dark:text-white">SocialPilot</span>
             </Link>
           </div>
 
-          <h1 className="text-2xl font-bold tracking-tight text-ink-900">{title}</h1>
-          <p className="mt-1.5 text-sm text-ink-500">{subtitle}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-ink-900 dark:text-white">{title}</h1>
+          <p className="mt-1.5 text-sm text-ink-500 dark:text-ink-400">{subtitle}</p>
 
           <div className="mt-8">{children}</div>
 
-          <div className="mt-6 text-center text-sm text-ink-500">{footer}</div>
+          <div className="mt-6 text-center text-sm text-ink-500 dark:text-ink-400">{footer}</div>
         </div>
       </div>
     </div>

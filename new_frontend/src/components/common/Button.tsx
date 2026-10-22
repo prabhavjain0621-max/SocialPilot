@@ -30,12 +30,13 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-ink-900 text-white hover:bg-ink-800 active:scale-[0.98] shadow-sm hover:shadow-md',
+    'bg-ink-900 text-white hover:bg-ink-800 dark:bg-brand-600 dark:hover:bg-brand-500 active:scale-[0.98] shadow-sm hover:shadow-md',
   secondary:
-    'bg-brand-600 text-white hover:bg-brand-700 active:scale-[0.98] shadow-sm hover:shadow-md',
-  ghost: 'text-ink-700 hover:bg-ink-100 active:scale-[0.98]',
+    'bg-brand-600 text-white hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600 active:scale-[0.98] shadow-sm hover:shadow-md',
+  ghost:
+    'text-ink-700 hover:bg-ink-100 dark:text-ink-300 dark:hover:bg-ink-800 dark:hover:text-white active:scale-[0.98]',
   outline:
-    'border border-ink-200 text-ink-800 bg-white hover:border-ink-300 hover:bg-ink-50 active:scale-[0.98]',
+    'border border-ink-200 text-ink-800 bg-white hover:border-ink-300 hover:bg-ink-50 dark:border-ink-700 dark:text-ink-200 dark:bg-ink-900/60 dark:hover:bg-ink-800 dark:hover:border-ink-600 active:scale-[0.98]',
   danger: 'bg-danger-600 text-white hover:bg-danger-700 active:scale-[0.98] shadow-sm',
 };
 

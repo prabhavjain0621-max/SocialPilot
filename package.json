@@ -1,4 +1,10 @@
 {
+  "name": "socialpilot",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix new_frontend install && npm --prefix new_frontend run build",
+    "typecheck": "npm --prefix new_frontend run typecheck"
+  },
   "dependencies": {
     "jwt-decode": "^4.0.0"
   }

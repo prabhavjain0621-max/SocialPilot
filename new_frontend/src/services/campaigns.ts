@@ -5,7 +5,7 @@ import type {
 } from '@/types/campaign';
 import type { PostOut } from '@/types/post';
 
-export const API_BASE = 'http://localhost:8000';
+export const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:8000').replace(/\/+$/, '');
 
 function getAuthHeaders(includeContentType = true): HeadersInit {
   const token = localStorage.getItem('token');

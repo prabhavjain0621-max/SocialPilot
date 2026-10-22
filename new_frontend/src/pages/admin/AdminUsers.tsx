@@ -143,13 +143,13 @@ export default function AdminUsers() {
       )}
 
       {/* Main Tab Switcher: Users vs Roles of Access Matrix */}
-      <div className="flex items-center gap-3 border-b border-ink-100 pb-1">
+      <div className="flex items-center gap-3 border-b border-ink-100 dark:border-ink-800 pb-1">
         <button
           onClick={() => setActiveTab('users')}
           className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-semibold transition-all ${
             activeTab === 'users'
-              ? 'border-brand-600 text-brand-700'
-              : 'border-transparent text-ink-500 hover:text-ink-900'
+              ? 'border-brand-600 text-brand-700 dark:border-brand-500 dark:text-brand-400'
+              : 'border-transparent text-ink-500 hover:text-ink-900 dark:text-ink-400 dark:hover:text-ink-100'
           }`}
         >
           <Users className="h-4 w-4" />
@@ -160,8 +160,8 @@ export default function AdminUsers() {
           onClick={() => setActiveTab('matrix')}
           className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-semibold transition-all ${
             activeTab === 'matrix'
-              ? 'border-brand-600 text-brand-700'
-              : 'border-transparent text-ink-500 hover:text-ink-900'
+              ? 'border-brand-600 text-brand-700 dark:border-brand-500 dark:text-brand-400'
+              : 'border-transparent text-ink-500 hover:text-ink-900 dark:text-ink-400 dark:hover:text-ink-100'
           }`}
         >
           <ShieldCheck className="h-4 w-4" />
@@ -180,8 +180,8 @@ export default function AdminUsers() {
                 onClick={() => setRoleFilter('all')}
                 className={`shrink-0 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
                   roleFilter === 'all'
-                    ? 'bg-ink-900 text-white shadow-sm'
-                    : 'text-ink-600 hover:bg-ink-100'
+                    ? 'bg-ink-900 text-white shadow-sm dark:bg-white dark:text-ink-950'
+                    : 'text-ink-600 hover:bg-ink-100 dark:text-ink-300 dark:hover:bg-ink-800'
                 }`}
               >
                 All Users ({users.length})
@@ -197,14 +197,14 @@ export default function AdminUsers() {
                     onClick={() => setRoleFilter(r)}
                     className={`flex items-center gap-1.5 shrink-0 rounded-xl px-3 py-2 text-xs font-semibold transition-all ${
                       roleFilter === r
-                        ? 'bg-ink-900 text-white shadow-sm'
-                        : 'text-ink-600 hover:bg-ink-100'
+                        ? 'bg-ink-900 text-white shadow-sm dark:bg-white dark:text-ink-950'
+                        : 'text-ink-600 hover:bg-ink-100 dark:text-ink-300 dark:hover:bg-ink-800'
                     }`}
                   >
                     <Icon className="h-3.5 w-3.5" />
                     <span>{config.label}</span>
                     <span className={`ml-1 rounded-full px-1.5 py-0.2 text-[10px] ${
-                      roleFilter === r ? 'bg-white/20 text-white' : 'bg-ink-100 text-ink-600'
+                      roleFilter === r ? 'bg-white/20 text-white dark:bg-ink-950/20 dark:text-ink-950' : 'bg-ink-100 text-ink-600 dark:bg-ink-800 dark:text-ink-300'
                     }`}>
                       {count}
                     </span>
@@ -220,13 +220,13 @@ export default function AdminUsers() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name or email..."
-                className="w-full rounded-xl border border-ink-100 bg-white py-2 pl-9 pr-4 text-sm text-ink-700 placeholder:text-ink-400 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10 sm:w-64"
+                className="w-full rounded-xl border border-ink-100 bg-white py-2 pl-9 pr-4 text-sm text-ink-700 placeholder:text-ink-400 transition-all focus:border-brand-300 focus:ring-2 focus:ring-brand-500/10 dark:border-ink-700 dark:bg-ink-900 dark:text-ink-100 dark:placeholder:text-ink-500 sm:w-64"
               />
             </div>
           </div>
 
           <Card className="overflow-hidden">
-            <div className="hidden grid-cols-[1.2fr_1fr_160px_120px_270px] gap-4 border-b border-ink-100 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-ink-400 sm:grid">
+            <div className="hidden grid-cols-[1.2fr_1fr_160px_120px_270px] gap-4 border-b border-ink-100 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-ink-400 dark:border-ink-800 dark:text-ink-400 sm:grid">
               <div className="flex items-center gap-1">
                 User
                 <ArrowUpDown className="h-3 w-3" />
@@ -248,7 +248,7 @@ export default function AdminUsers() {
                 }
               />
             ) : (
-              <div className="divide-y divide-ink-50">
+              <div className="divide-y divide-ink-50 dark:divide-ink-800/60">
                 {filtered.map((u) => {
                   const isCurrentAdmin = u.id === currentAdmin?.id;
                   const currentRole = normalizeRole(u.role);
@@ -258,7 +258,7 @@ export default function AdminUsers() {
                   return (
                     <div
                       key={u.id}
-                      className="grid grid-cols-1 gap-3 px-5 py-3.5 transition-colors hover:bg-ink-50/40 sm:grid-cols-[1.2fr_1fr_160px_120px_270px] sm:items-center sm:gap-4"
+                      className="grid grid-cols-1 gap-3 px-5 py-3.5 transition-colors hover:bg-ink-50/40 dark:hover:bg-ink-800/40 sm:grid-cols-[1.2fr_1fr_160px_120px_270px] sm:items-center sm:gap-4"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div
@@ -267,10 +267,10 @@ export default function AdminUsers() {
                           {(u.full_name || u.email || '?').charAt(0).toUpperCase()}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-medium text-ink-900">
+                          <p className="truncate text-sm font-medium text-ink-900 dark:text-white">
                             {u.full_name || 'Unnamed user'}
                             {isCurrentAdmin && (
-                              <span className="ml-1.5 rounded bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700">
+                              <span className="ml-1.5 rounded bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-950/60 dark:text-brand-300">
                                 You
                               </span>
                             )}
@@ -279,7 +279,7 @@ export default function AdminUsers() {
                         </div>
                       </div>
 
-                      <p className="hidden truncate text-sm text-ink-500 sm:block">
+                      <p className="hidden truncate text-sm text-ink-500 dark:text-ink-400 sm:block">
                         {u.email || 'No email'}
                       </p>
 
@@ -304,16 +304,16 @@ export default function AdminUsers() {
                         {/* Option of Roles of Access / View Permissions Modal */}
                         <button
                           onClick={() => setSelectedUserForAccess(u)}
-                          className="flex items-center gap-1.5 rounded-lg border border-brand-200 bg-brand-50/70 px-2.5 py-1.5 text-xs font-semibold text-brand-700 transition-colors hover:bg-brand-100"
+                          className="flex items-center gap-1.5 rounded-lg border border-brand-200 bg-brand-50/70 px-2.5 py-1.5 text-xs font-semibold text-brand-700 transition-colors hover:bg-brand-100 dark:border-brand-800/60 dark:bg-brand-950/40 dark:text-brand-300 dark:hover:bg-brand-900/50"
                           title="View exact permissions and roles of access for this user"
                         >
-                          <Key className="h-3.5 w-3.5 text-brand-600" />
+                          <Key className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400" />
                           <span>Access Rights</span>
                         </button>
 
                         {isCurrentAdmin ? (
                           <div
-                            className="flex items-center gap-1 rounded-lg border border-ink-200 bg-ink-50/70 px-2.5 py-1.5 text-xs text-ink-500 cursor-not-allowed"
+                            className="flex items-center gap-1 rounded-lg border border-ink-200 bg-ink-50/70 px-2.5 py-1.5 text-xs text-ink-500 cursor-not-allowed dark:border-ink-800 dark:bg-ink-800/50 dark:text-ink-400"
                             title="You cannot change your own role"
                           >
                             <Lock className="h-3 w-3 text-ink-400" />
@@ -322,7 +322,7 @@ export default function AdminUsers() {
                         ) : (
                           <div className="relative">
                             {updatingId === u.id ? (
-                              <div className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-ink-50 px-2.5 py-1.5 text-xs text-ink-500">
+                              <div className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-ink-50 px-2.5 py-1.5 text-xs text-ink-500 dark:border-ink-800 dark:bg-ink-800/50 dark:text-ink-400">
                                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
                                 <span>Updating...</span>
                               </div>
@@ -332,11 +332,11 @@ export default function AdminUsers() {
                                   value={currentRole}
                                   disabled={updatingId === u.id}
                                   onChange={(e) => handleRoleChange(u.id, e.target.value as RoleName)}
-                                  className="appearance-none rounded-lg border border-ink-200 bg-white py-1.5 pl-2.5 pr-7 text-xs font-medium text-ink-700 transition-colors hover:border-brand-300 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/10 cursor-pointer"
+                                  className="appearance-none rounded-lg border border-ink-200 bg-white py-1.5 pl-2.5 pr-7 text-xs font-medium text-ink-700 transition-colors hover:border-brand-300 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/10 cursor-pointer dark:border-ink-700 dark:bg-ink-800 dark:text-ink-200"
                                   title="Change role of access"
                                 >
                                   {ALL_ROLES.map((r) => (
-                                    <option key={r} value={r}>
+                                    <option key={r} value={r} className="dark:bg-ink-900 dark:text-white">
                                       {r}
                                     </option>
                                   ))}
@@ -350,7 +350,7 @@ export default function AdminUsers() {
                         {!isCurrentAdmin && (
                           <button
                             onClick={() => setUserToDelete({ id: u.id, email: u.email, full_name: u.full_name })}
-                            className="flex items-center justify-center h-8 w-8 rounded-lg border border-danger-100 text-danger-500 hover:bg-danger-50 transition-colors"
+                            className="flex items-center justify-center h-8 w-8 rounded-lg border border-danger-100 text-danger-500 hover:bg-danger-50 dark:border-danger-900/40 dark:hover:bg-danger-950/40 transition-colors"
                             title="Delete user"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -379,16 +379,16 @@ export default function AdminUsers() {
       {/* Delete User Modal */}
       {userToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 text-danger-600">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3 text-danger-600 dark:text-danger-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-50 dark:bg-danger-950/50">
                 <Trash2 className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-semibold text-ink-900">Delete User Account</h3>
+              <h3 className="text-base font-semibold text-ink-900 dark:text-white">Delete User Account</h3>
             </div>
-            <p className="text-sm text-ink-600">
+            <p className="text-sm text-ink-600 dark:text-ink-300">
               Are you sure you want to permanently delete{' '}
-              <span className="font-semibold text-ink-900">{userToDelete.email}</span>?
+              <span className="font-semibold text-ink-900 dark:text-white">{userToDelete.email}</span>?
               All associated posts, campaigns, and media for this user will be removed.
             </p>
             <div className="flex items-center justify-end gap-3 pt-2">

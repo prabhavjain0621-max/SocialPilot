@@ -100,24 +100,24 @@ export default function NotificationDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 transition-colors hover:bg-ink-100"
+        className="relative flex h-10 w-10 items-center justify-center rounded-lg text-ink-600 dark:text-ink-400 transition-colors hover:bg-ink-100 dark:hover:bg-ink-800"
         aria-label="Notifications"
       >
         <Bell className="h-5 w-5" />
         {unreadCount > 0 && (
-          <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger-500 px-1 text-[10px] font-bold text-white shadow-sm ring-2 ring-white">
+          <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger-500 px-1 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-ink-900">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-ink-100 bg-white shadow-xl z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-100">
-          <div className="flex items-center justify-between border-b border-ink-100 bg-ink-50/50 px-4 py-3">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 shadow-xl dark:shadow-2xl z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-100">
+          <div className="flex items-center justify-between border-b border-ink-100 dark:border-ink-800 bg-ink-50/50 dark:bg-ink-800/50 px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-ink-900">Notifications</span>
+              <span className="font-bold text-sm text-ink-900 dark:text-white">Notifications</span>
               {unreadCount > 0 && (
-                <span className="rounded-full bg-brand-100 px-2 py-0.5 text-xs font-semibold text-brand-700">
+                <span className="rounded-full bg-brand-100 dark:bg-brand-950/60 px-2 py-0.5 text-xs font-semibold text-brand-700 dark:text-brand-300">
                   {unreadCount} new
                 </span>
               )}
@@ -126,7 +126,7 @@ export default function NotificationDropdown() {
               <button
                 onClick={handleMarkAllRead}
                 disabled={markingAll}
-                className="flex items-center gap-1 text-xs font-medium text-brand-600 hover:text-brand-800 disabled:opacity-50"
+                className="flex items-center gap-1 text-xs font-medium text-brand-600 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 disabled:opacity-50"
               >
                 {markingAll ? (
                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -138,12 +138,12 @@ export default function NotificationDropdown() {
             )}
           </div>
 
-          <div className="max-h-80 overflow-y-auto divide-y divide-ink-100">
+          <div className="max-h-80 overflow-y-auto divide-y divide-ink-100 dark:divide-ink-800">
             {notifications.length === 0 ? (
               <div className="py-8 px-4 text-center">
-                <CheckCircle2 className="mx-auto h-8 w-8 text-ink-300" />
-                <p className="mt-2 text-sm font-semibold text-ink-700">All caught up!</p>
-                <p className="mt-0.5 text-xs text-ink-400">No recent notifications</p>
+                <CheckCircle2 className="mx-auto h-8 w-8 text-ink-300 dark:text-ink-600" />
+                <p className="mt-2 text-sm font-semibold text-ink-700 dark:text-ink-200">All caught up!</p>
+                <p className="mt-0.5 text-xs text-ink-400 dark:text-ink-500">No recent notifications</p>
               </div>
             ) : (
               notifications.map((notif) => {
@@ -154,17 +154,17 @@ export default function NotificationDropdown() {
                   <div
                     key={notif.id}
                     onClick={() => handleNotificationClick(notif)}
-                    className={`flex items-start gap-3 p-3.5 transition-colors cursor-pointer hover:bg-ink-50/80 ${
-                      !notif.is_read ? 'bg-brand-50/30' : ''
+                    className={`flex items-start gap-3 p-3.5 transition-colors cursor-pointer hover:bg-ink-50/80 dark:hover:bg-ink-800/60 ${
+                      !notif.is_read ? 'bg-brand-50/30 dark:bg-brand-950/30' : ''
                     }`}
                   >
                     <div
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${
                         isPublished
-                          ? 'bg-emerald-100 text-emerald-600'
+                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'
                           : isFailed
-                          ? 'bg-danger-100 text-danger-600'
-                          : 'bg-brand-100 text-brand-600'
+                          ? 'bg-danger-100 dark:bg-danger-950/60 text-danger-600 dark:text-danger-400'
+                          : 'bg-brand-100 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400'
                       }`}
                     >
                       {isPublished ? (
@@ -178,25 +178,25 @@ export default function NotificationDropdown() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
-                        <p className="text-xs font-bold text-ink-900 truncate">
+                        <p className="text-xs font-bold text-ink-900 dark:text-ink-100 truncate">
                           {notif.title}
                         </p>
-                        <span className="text-[10px] text-ink-400 shrink-0">
+                        <span className="text-[10px] text-ink-400 dark:text-ink-500 shrink-0">
                           {formatRelativeTime(notif.created_at)}
                         </span>
                       </div>
-                      <p className="mt-0.5 text-xs text-ink-600 line-clamp-2">
+                      <p className="mt-0.5 text-xs text-ink-600 dark:text-ink-300 line-clamp-2">
                         {notif.message}
                       </p>
                       {(notif.related_post_id || notif.related_campaign_id) && (
-                        <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-600">
+                        <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-600 dark:text-brand-400">
                           View details <ExternalLink className="h-2.5 w-2.5" />
                         </span>
                       )}
                     </div>
 
                     {!notif.is_read && (
-                      <span className="h-2 w-2 shrink-0 rounded-full bg-brand-600 mt-1" />
+                      <span className="h-2 w-2 shrink-0 rounded-full bg-brand-600 dark:bg-brand-500 mt-1" />
                     )}
                   </div>
                 );
@@ -204,11 +204,11 @@ export default function NotificationDropdown() {
             )}
           </div>
 
-          <div className="border-t border-ink-100 bg-ink-50/30 p-2 text-center">
+          <div className="border-t border-ink-100 dark:border-ink-800 bg-ink-50/30 dark:bg-ink-800/30 p-2 text-center">
             <Link
               to="/app/notifications"
               onClick={() => setIsOpen(false)}
-              className="text-xs font-semibold text-ink-600 hover:text-ink-900 block py-1"
+              className="text-xs font-semibold text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-100 block py-1"
             >
               View all notifications
             </Link>
