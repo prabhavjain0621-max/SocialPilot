@@ -1,0 +1,12 @@
+
+*.sql
+backup_*
+*.bak
+celerybeat-schedule*
+backend/media/
+__pycache__/
+*.pyc
+new_frontend/dist/
+node_modules/
+venv/
+.env
